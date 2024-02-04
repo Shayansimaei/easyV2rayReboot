@@ -1,19 +1,84 @@
-<p>
-{{isRegister}}
-</p>
-<ion-grid >
-  <ion-row >
-    <ion-col size="6" size-md="4" size-lg="2">
-      <ion-chip class="login-chip google-chip">
-        <ion-icon class="logo" name="logo-google"></ion-icon>
-        <ion-label class="text"><span>sign in with</span> google</ion-label>
-    </ion-chip>
-    </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col size="6" size-md="4" size-lg="2">1</ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col size="6" size-md="4" size-lg="2">1</ion-col>
-  </ion-row>
-</ion-grid>
+<div class="container">
+  <ion-grid>
+    <ion-row>
+      <form [formGroup]="userForm">
+        <ion-input
+          class="margin-input"
+          label="Email"
+          type="email"
+          fill="outline"
+          formControlName="email"
+        ></ion-input>
+        <ion-input
+          class="margin-input"
+          label="password"
+          fill="outline"
+          type="password"
+          formControlName="password"
+        ></ion-input>
+        <ion-input
+          *ngIf="isRegister"
+          class="margin-input"
+          label="password Confirm"
+          fill="outline"
+          type="password"
+          formControlName="passwordConfirm"
+        ></ion-input>
+        <ion-button
+          expand="block"
+          type="submit"
+          [disabled]="!submitAllowance()"
+          >{{ isRegister ? "register" : "Login" }}</ion-button
+        >
+        <ion-label *ngIf="!isRegister" class="go-to-register">are you new? <ion-label color="tertiary" (click)="goToRegister()">  Create An account</ion-label></ion-label>
+
+        <ion-list *ngIf="isRegister" lines="none">
+          <ion-item>
+            <ion-label
+              class="password-structure"
+              [color]="
+                userForm.value.password!.length >= 8 ? 'success' : 'medium'
+              "
+              ><ion-icon [name]="
+              userForm.value.password!.length >= 8 
+                ? 'checkmark-circle-outline'
+                : 'alert-circle-outline'
+            "></ion-icon>password
+              must be 8 character</ion-label
+            >
+          </ion-item>
+          <ion-item *ngIf="userForm.value.password!.length >= 8">
+            <ion-label
+              class="password-structure"
+              [color]="
+                userForm.value.password == userForm.value.passwordConfirm
+                  ? 'success'
+                  : 'medium'
+              " 
+              ><ion-icon
+                [name]="
+                  userForm.value.password == userForm.value.passwordConfirm
+                    ? 'checkmark-circle-outline'
+                    : 'alert-circle-outline'
+                "
+              ></ion-icon
+              >password and confirm must be equal</ion-label
+            >
+          </ion-item>
+          <ion-item>
+          </ion-item>
+        </ion-list>
+      </form>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <div class="chip-container container">
+          <ion-chip class="login-chip google-chip">
+            <ion-icon class="logo" name="logo-google"></ion-icon>
+            <ion-label class="text"><span>sign in with</span> google</ion-label>
+          </ion-chip>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</div>

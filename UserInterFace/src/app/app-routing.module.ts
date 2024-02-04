@@ -11,13 +11,13 @@ const routes: Routes = [
   {
   path: 'login',
   component:LoginComponent,
-  data:{isRegester:false},
+  data:{isRegister:false},
   pathMatch: 'full'
 },
 {
   path: 'register',
   component:LoginComponent,
-  data:{isRegester:true},
+  data:{isRegister:true},
   pathMatch: 'full'
 },
   {

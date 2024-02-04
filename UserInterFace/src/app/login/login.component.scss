@@ -2,6 +2,8 @@
     font-size: 1.6rem;
     padding: .5rem 3.8rem;
     text-transform: capitalize;
+    margin-top: 2rem;
+
     span{
         font-size: .4rem;
     }
@@ -14,6 +16,30 @@
     .logo{
         font-size: 2.5rem;
         color: rgb(241, 46, 46);
+    }
+
+}
+.container{
+    margin: auto;
+}
+.margin-input{
+    margin-bottom: .6rem;
+}
+.chip-container{
+    display: table;
+}
+.password-structure{
+    font-size: .8rem;
+    text-indent: .2rem;
+    display: flex;
+    margin-bottom: .5rem;
+}
+.go-to-register{
+    font-size: .8rem;
+    margin: auto;
+    display: table;
+    ion-label{
+        cursor: pointer;
     }
 
 }
