@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {Router} from '@angular/router';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { AuthorizationService } from '../authorization.service';
 
 @Component({
   selector: 'app-login',
@@ -10,12 +11,12 @@ import { FormGroup, FormControl } from '@angular/forms';
 })
 export class LoginComponent implements OnInit {
   public isRegister: boolean = false;
-  constructor(private route: ActivatedRoute,private router :Router) {
+  constructor(private route: ActivatedRoute,private router :Router,private authorization:AuthorizationService) {
     this.isRegister = this.route.snapshot.data['isRegister'];
   }
   userForm = new FormGroup({
-    email: new FormControl(''),
-    password: new FormControl(''),
+    email: new FormControl('',Validators.required),
+    password: new FormControl('',Validators.required),
     passwordConfirm: new FormControl(''),
   });
   submitAllowance = () => {
@@ -38,6 +39,14 @@ export class LoginComponent implements OnInit {
   };
   goToRegister():void{
     this.router.navigate(['/register'])
+  }
+  signInWithGoogle():void{
+    this.authorization.GoogleAuth();
+  }
+  SubmitForm(){
+    if(this.isRegister){
+      this.authorization.Register(this.userForm.value.email!,this.userForm.value.password!);
+    }else this.authorization.Login(this.userForm.value.email!,this.userForm.value.password!);
   }
 
   ngOnInit() {}

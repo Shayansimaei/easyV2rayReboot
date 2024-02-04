@@ -10,10 +10,12 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint",
-    "ionicComp":"ionic g c",
-    "ionicService":"ionic g s",
-    "ionicDirec":"ionic g d",
-    "ionicPipe":"ionic g p"
+    "ionicComp": "ionic g c",
+    "ionicService": "ionic g s",
+    "ionicDirec": "ionic g d",
+    "ionicPipe": "ionic g p",
+    "ionicGuard": "ionic g guard"
+
   },
   "private": true,
   "dependencies": {
@@ -21,6 +23,7 @@
     "@angular/common": "^17.0.2",
     "@angular/compiler": "^17.0.2",
     "@angular/core": "^17.0.2",
+    "@angular/fire": "^17.0.1",
     "@angular/forms": "^17.0.2",
     "@angular/platform-browser": "^17.0.2",
     "@angular/platform-browser-dynamic": "^17.0.2",
@@ -31,6 +34,7 @@
     "@capacitor/keyboard": "5.0.7",
     "@capacitor/status-bar": "5.0.6",
     "@ionic/angular": "^7.0.0",
+    "firebase": "^10.8.0",
     "ionicons": "^7.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",

@@ -1,7 +1,7 @@
 <div class="container">
   <ion-grid>
     <ion-row>
-      <form [formGroup]="userForm">
+      <form [formGroup]="userForm" (ngSubmit)="SubmitForm()">
         <ion-input
           class="margin-input"
           label="Email"
@@ -30,7 +30,12 @@
           [disabled]="!submitAllowance()"
           >{{ isRegister ? "register" : "Login" }}</ion-button
         >
-        <ion-label *ngIf="!isRegister" class="go-to-register">are you new? <ion-label color="tertiary" (click)="goToRegister()">  Create An account</ion-label></ion-label>
+        <ion-label *ngIf="!isRegister" class="go-to-register"
+          >are you new?
+          <ion-label color="tertiary" (click)="goToRegister()">
+            Create An account</ion-label
+          ></ion-label
+        >
 
         <ion-list *ngIf="isRegister" lines="none">
           <ion-item>
@@ -39,12 +44,14 @@
               [color]="
                 userForm.value.password!.length >= 8 ? 'success' : 'medium'
               "
-              ><ion-icon [name]="
-              userForm.value.password!.length >= 8 
-                ? 'checkmark-circle-outline'
-                : 'alert-circle-outline'
-            "></ion-icon>password
-              must be 8 character</ion-label
+              ><ion-icon
+                [name]="
+                  userForm.value.password!.length >= 8
+                    ? 'checkmark-circle-outline'
+                    : 'alert-circle-outline'
+                "
+              ></ion-icon
+              >password must be 8 character</ion-label
             >
           </ion-item>
           <ion-item *ngIf="userForm.value.password!.length >= 8">
@@ -54,7 +61,7 @@
                 userForm.value.password == userForm.value.passwordConfirm
                   ? 'success'
                   : 'medium'
-              " 
+              "
               ><ion-icon
                 [name]="
                   userForm.value.password == userForm.value.passwordConfirm
@@ -65,14 +72,13 @@
               >password and confirm must be equal</ion-label
             >
           </ion-item>
-          <ion-item>
-          </ion-item>
+          <ion-item> </ion-item>
         </ion-list>
       </form>
     </ion-row>
     <ion-row>
       <ion-col>
-        <div class="chip-container container">
+        <div class="chip-container container" (click)="signInWithGoogle()">
           <ion-chip class="login-chip google-chip">
             <ion-icon class="logo" name="logo-google"></ion-icon>
             <ion-label class="text"><span>sign in with</span> google</ion-label>
