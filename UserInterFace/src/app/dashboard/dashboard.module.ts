@@ -4,9 +4,9 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { FolderPageRoutingModule } from './folder-routing.module';
+import { DashboardPageRoutingModule } from './dashboard.routing.module';
 
-import { FolderPage } from './folder.page';
+import { DashboardPage } from './dashboard.page';
 import { HeaderComponent } from '../header/header.component';
 
 @NgModule({
@@ -14,8 +14,8 @@ import { HeaderComponent } from '../header/header.component';
     CommonModule,
     FormsModule,
     IonicModule,
-    FolderPageRoutingModule,
+    DashboardPageRoutingModule,
   ],
-  declarations: [FolderPage,HeaderComponent]
+  declarations: [DashboardPage,HeaderComponent]
 })
 export class FolderPageModule {}

@@ -15,7 +15,7 @@ ion-menu.md ion-list {
   padding: 20px 0;
 }
 
-ion-menu.md ion-note {
+ion-menu.md ion-note {                      
   margin-bottom: 30px;
 }
 
@@ -123,4 +123,13 @@ ion-item.selected {
   position: sticky;
    top: 1.5rem;
    right: 1.5rem;
+}
+.main-thumbnail {
+  --size: 5rem;
+  --border-radius: 14px;
+}
+.sign-out{
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

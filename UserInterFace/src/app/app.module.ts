@@ -11,9 +11,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { environment } from 'src/environments/environment';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
-import { AuthorizationService } from './authorization.service';
-import { PageGuard } from './page.guard';
-import { AuthGuard } from './auth.guard';
+import { AuthorizationService } from './services/authorization.service';
+import { PageGuard } from './guards/page.guard';
+import { AuthGuard } from './guards/auth.guard';
 @NgModule({
   declarations: [AppComponent, LoginComponent],
   imports: [

@@ -62,7 +62,7 @@ export class AuthorizationService {
            /* Call the SendVerificaitonMail() function when new user sign
         up and returns promise */
           this.sendEmailVerification()
-          this.router.navigate(['/folder/inbox']);
+          this.router.navigate(['/dashboard/inbox']);
         });
       })
       .catch((error) => {
@@ -77,7 +77,7 @@ export class AuthorizationService {
       .then((result: any) => {
         this.UserData = result.user;
         this.ngZone.run(() => {
-          this.router.navigate(['/folder/inbox']);
+          this.router.navigate(['/dashboard/inbox']);
         });
       })
       .catch((error) => {
@@ -112,7 +112,7 @@ export class AuthorizationService {
     //Pop Up Provider
     loginWithPopup(provider :any) {
       return signInWithPopup(this.auth,provider).then(() => {
-        this.router.navigate(['folder/inbox']);
+        this.router.navigate(['dashboard/inbox']);
       });
     }
 

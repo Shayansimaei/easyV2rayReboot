@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { IonMenu } from '@ionic/angular';
+import { AuthorizationService } from './services/authorization.service';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -20,7 +21,7 @@ export class AppComponent implements AfterViewInit {
     { title: 'Spam', url: '/folder/spam', icon: 'warning' },
   ];
   public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
-  constructor() {}
+  constructor(private auth:AuthorizationService) {}
 
   public async isOpen(e:any):Promise<void>{
     console.log(e);
@@ -29,5 +30,9 @@ export class AppComponent implements AfterViewInit {
   async ngAfterViewInit(){
     console.log(await this.ionMenu.close());
     
+  }
+  signOut():void{
+    this.ionMenu.close();
+    this.auth.Logout();
   }
 }
