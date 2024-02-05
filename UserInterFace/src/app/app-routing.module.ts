@@ -3,6 +3,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './guards/auth.guard';
 import { PageGuard } from './guards/page.guard';
+import { FormType } from 'src/Types/enums/formType.enum';
 
 const routes: Routes = [
  { path: '',
@@ -12,16 +13,24 @@ const routes: Routes = [
   {
   path: 'login',
   component:LoginComponent,
-  data:{isRegister:false},
+  data:{isRegister:FormType.login},
   canActivate:[AuthGuard],
 },
 {
   path: 'register',
   component:LoginComponent,
-  data:{isRegister:true},
+  data:{isRegister:FormType.register},
   canActivate:[AuthGuard],
   
 },
+{
+  path: 'resetPassword',
+  component:LoginComponent,
+  data:{isRegister:FormType.resetPassword},
+  canActivate:[AuthGuard],
+  
+},
+
   {
     path: 'dashboard/:id',
     loadChildren: () => import('./dashboard/dashboard.module').then( m => m.FolderPageModule),

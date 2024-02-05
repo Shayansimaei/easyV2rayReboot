@@ -54,19 +54,19 @@ export class AuthorizationService {
 
 
     //Register Method
-    Register(email : string, password : string) {
+     Register(email : string, password : string) {
       return createUserWithEmailAndPassword(this.auth, email, password)
       .then((result) => {
         this.UserData = result.user;
-        this.ngZone.run(() => {
+        this.ngZone.run(async () => {
            /* Call the SendVerificaitonMail() function when new user sign
         up and returns promise */
-          this.sendEmailVerification()
+          await this.sendEmailVerification()
           this.router.navigate(['/dashboard/inbox']);
         });
       })
       .catch((error) => {
-        window.alert(error.message);
+        throw new Error(error)
       });
     }
 
@@ -81,7 +81,7 @@ export class AuthorizationService {
         });
       })
       .catch((error) => {
-        window.alert(error.message);
+        throw new Error(error)
       });
     }
 
@@ -121,10 +121,9 @@ export class AuthorizationService {
     async sendPasswordResetEmails(email : string){
        sendPasswordResetEmail(this.auth,email)
        .then(() => {
-          window.alert('Password reset email sent, check your inbox.');
        })
        .catch((error) => {
-        window.alert(error.message);
+        throw new Error(error)
       });
     }
 

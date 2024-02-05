@@ -3,24 +3,31 @@
   <ion-grid>
     <ion-row>
       <form [formGroup]="userForm" (ngSubmit)="SubmitForm()">
+        <ion-card
+          [color]="messageType == 'error' ? 'danger' : 'success'"
+          *ngIf="message"
+        >
+          <ion-card-content>{{ message | translate }}</ion-card-content>
+        </ion-card>
         <ion-input
           class="margin-input"
-          label="{{'Email'|translate}}"
+          label="{{ 'Email' | translate }}"
           type="email"
           fill="outline"
           formControlName="email"
         ></ion-input>
         <ion-input
+          *ngIf="formType != 2"
           class="margin-input"
-          label="{{'Password'|translate}}"
+          label="{{ 'Password' | translate }}"
           fill="outline"
           type="password"
           formControlName="password"
         ></ion-input>
         <ion-input
-          *ngIf="isRegister"
+          *ngIf="formType == 1"
           class="margin-input"
-          label="{{'Confirm Password'|translate}}"
+          label="{{ 'Confirm Password' | translate }}"
           fill="outline"
           type="password"
           formControlName="passwordConfirm"
@@ -28,18 +35,37 @@
         <ion-button
           expand="block"
           type="submit"
+          *ngIf="formType != 2"
           [disabled]="!submitAllowance()"
-          >{{ isRegister ? "Register" : "Login" | translate }}</ion-button
+          >{{ formType == 1 ? "Register" : ("Login" | translate) }}</ion-button
         >
-        <ion-label *ngIf="!isRegister" class="go-to-register"
-          >{{'are you new?'|translate}}
-          <ion-label color="tertiary" (click)="goToRegister()">
-            {{'Create An account'|translate}}
-           </ion-label
-          ></ion-label
+        <ion-button
+          expand="block"
+          type="submit"
+          *ngIf="formType == 2"
+          [disabled]="!submitAllowance()"
+          >{{ "Reset" | translate }}</ion-button
+        >
+        <ion-label *ngIf="formType != 1" class="go-to-register"
+          >{{ "are you new?" | translate }}
+          <ion-label color="tertiary" (click)="goToAnotherForm(0)">
+            {{ "Create An account" | translate }}
+          </ion-label></ion-label
+        >
+        <ion-label *ngIf="formType != 1 && formType != 2" class="go-to-register"
+          >{{ "Forgot your password?" | translate }}
+          <ion-label color="tertiary" (click)="goToAnotherForm(2)">
+            {{ "reset your password" | translate }}
+          </ion-label></ion-label
+        >
+        <ion-label *ngIf="formType == 2" class="go-to-register"
+          >{{ "Back to" | translate }}
+          <ion-label color="tertiary" (click)="goToAnotherForm(1)">
+            {{ "Login" | translate }}
+          </ion-label></ion-label
         >
 
-        <ion-list *ngIf="isRegister" lines="none">
+        <ion-list *ngIf="formType==1" lines="none">
           <ion-item>
             <ion-label
               class="password-structure"
@@ -52,11 +78,9 @@
                     ? 'checkmark-circle-outline'
                     : 'alert-circle-outline'
                 "
-              ></ion-icon
-              >
-              {{'password must be 8 characters'|translate}}
-              </ion-label
-            >
+              ></ion-icon>
+              {{ "password must be 8 characters" | translate }}
+            </ion-label>
           </ion-item>
           <ion-item *ngIf="userForm.value.password!.length >= 8">
             <ion-label
@@ -72,11 +96,9 @@
                     ? 'checkmark-circle-outline'
                     : 'alert-circle-outline'
                 "
-              ></ion-icon
-              >
-              {{'password and confirm must be equal'|translate}}
-              </ion-label
-            >
+              ></ion-icon>
+              {{ "password and confirm must be equal" | translate }}
+            </ion-label>
           </ion-item>
           <ion-item> </ion-item>
         </ion-list>
@@ -87,7 +109,9 @@
         <div class="chip-container container" (click)="signInWithGoogle()">
           <ion-chip class="login-chip google-chip">
             <ion-icon class="logo" name="logo-google"></ion-icon>
-            <ion-label class="text"><span>{{'sign in with'|translate}}</span> google</ion-label>
+            <ion-label class="text"
+              ><span>{{ "sign in with" | translate }}</span> google</ion-label
+            >
           </ion-chip>
         </div>
       </ion-col>
