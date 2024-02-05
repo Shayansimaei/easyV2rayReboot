@@ -12,7 +12,10 @@ export const environment = {
     messagingSenderId: "774280027821",
     appId: "1:774280027821:web:b9527ceea2528a1257f024",
     measurementId: "G-SGWW2BCQRM"
-  }
+  },
+  tolgee:{
+    tolgeeApiUrl: 'https://app.tolgee.io',
+    tolgeeApiKey: 'tgpak_guzdcnc7ozvdem3wojvgc4lomi3hc33qny4wg5rrorywmnjwmq'  }
 };
 
 /*

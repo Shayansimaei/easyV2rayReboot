@@ -12,10 +12,19 @@ import { environment } from 'src/environments/environment';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { AuthorizationService } from './services/authorization.service';
-import { PageGuard } from './guards/page.guard';
-import { AuthGuard } from './guards/auth.guard';
+import {
+  DevTools,
+  NgxTolgeeModule,
+  Tolgee,
+  TOLGEE_INSTANCE,
+  FormatSimple,
+  LanguageStorage,
+  LanguageDetector,
+  BackendFetch,
+} from '@tolgee/ngx';
+import { LangSelectorComponent } from './lang-selector/lang-selector.component';
 @NgModule({
-  declarations: [AppComponent, LoginComponent],
+  declarations: [AppComponent, LoginComponent, LangSelectorComponent],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
@@ -24,8 +33,46 @@ import { AuthGuard } from './guards/auth.guard';
     ReactiveFormsModule,
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
     provideAuth(() => getAuth()),
+    NgxTolgeeModule,
   ],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },AuthorizationService],
+  providers: [
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    AuthorizationService,
+    {
+      provide: TOLGEE_INSTANCE,
+      useFactory: () => {
+        return Tolgee()
+          .use(DevTools())
+          .use(FormatSimple())
+          .use(LanguageStorage())
+          .use(BackendFetch({}))
+
+          .init({
+            availableLanguages: ['en', 'fa', 'zh', 'ru'],
+            defaultLanguage: 'en',
+            // for development
+
+            fallbackLanguage: 'en',
+            apiUrl: environment.tolgee.tolgeeApiUrl,
+            apiKey: environment.tolgee.tolgeeApiKey,
+            staticData: {
+              'en:namespaced': () =>
+                import('../i18n/namespaced/en.json'),
+              'fa:namespaced': () =>
+                import('../i18n/namespaced/fa.json'),
+              'zh:namespaced': () =>
+                import('../i18n/namespaced/zh.json'),
+              'ru:namespaced': () =>
+                import('../i18n/namespaced/ru.json'),
+              en: () => import('../i18n/en.json'),
+              fa: () => import('../i18n/fa.json'),
+              zh: () => import('../i18n/zh.json'),
+              ru: () => import('../i18n/ru.json'),
+            },
+          });
+      },
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

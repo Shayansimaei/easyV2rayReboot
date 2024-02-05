@@ -15,7 +15,6 @@
     "ionicDirec": "ionic g d",
     "ionicPipe": "ionic g p",
     "ionicGuard": "ionic g guard"
-
   },
   "private": true,
   "dependencies": {
@@ -34,6 +33,7 @@
     "@capacitor/keyboard": "5.0.7",
     "@capacitor/status-bar": "5.0.6",
     "@ionic/angular": "^7.0.0",
+    "@tolgee/ngx": "^5.19.5",
     "firebase": "^10.8.0",
     "ionicons": "^7.0.0",
     "rxjs": "~7.8.0",
@@ -50,6 +50,7 @@
     "@angular/cli": "^17.0.0",
     "@angular/compiler-cli": "^17.0.2",
     "@angular/language-service": "^17.0.2",
+    "@angular/localize": "^17.1.1",
     "@capacitor/cli": "5.6.0",
     "@ionic/angular-toolkit": "^9.0.0",
     "@types/jasmine": "~5.1.0",
@@ -68,6 +69,6 @@
     "karma-jasmine-html-reporter": "~2.1.0",
     "ts-node": "^8.3.0",
     "typescript": "~5.2.2"
-  },
+    },
   "description": "An Ionic project"
 }
