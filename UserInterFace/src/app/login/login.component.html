@@ -1,4 +1,7 @@
-<lang-selector></lang-selector>
+<div class="lan-container">
+  <lang-selector></lang-selector>
+
+</div>
 <div class="container">
   <ion-grid>
     <ion-row>
@@ -37,7 +40,7 @@
           type="submit"
           *ngIf="formType != 2"
           [disabled]="!submitAllowance()"
-          >{{ formType == 1 ? "Register" : ("Login" | translate) }}</ion-button
+          >{{ formType == 1 ? "Register" : "Login" | translate }}</ion-button
         >
         <ion-button
           expand="block"
