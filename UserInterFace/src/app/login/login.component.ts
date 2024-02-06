@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private authorization: AuthorizationService
   ) {
-    this.formType = this.route.snapshot.data['isRegister'];
+    this.formType = this.route.snapshot.data['formType'];
   }
   userForm = new FormGroup({
     email: new FormControl('', Validators.required),

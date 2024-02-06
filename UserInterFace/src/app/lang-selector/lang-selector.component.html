@@ -1,6 +1,6 @@
 <ion-select (ionChange)="langService.changeLanguage($event.target.value)" aria-label="language" placeholder="{{'Select your language'| translate}}" [value]="langService.languageAsync | async">
-  <ion-select-option value="en" >{{'English'| translate}}</ion-select-option>
-  <ion-select-option value="fa" >{{'Persian'| translate}}</ion-select-option>
-  <ion-select-option value="zh" >{{'Chinese'| translate}}</ion-select-option>
-  <ion-select-option value="ru" >{{'Russian'| translate}}</ion-select-option>
+  <ion-select-option value="en" >{{'English'| translate}} 🇬🇧</ion-select-option>
+  <ion-select-option value="fa" >{{'Persian'| translate}} 🇮🇷</ion-select-option>
+  <ion-select-option value="zh" >{{'Chinese'| translate}} 🇨🇳</ion-select-option>
+  <ion-select-option value="ru" >{{'Russian'| translate}} 🇷🇺</ion-select-option>
 </ion-select>

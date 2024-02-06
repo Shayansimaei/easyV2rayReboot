@@ -48,3 +48,35 @@
     margin: 0 2rem;
 
 }
+#backForm{
+    background-image: url("../../assets/backForm.svg");
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index: -1;
+    background-repeat: no-repeat;
+    background-size: cover;
+    animation-name: formSpin;
+    animation-duration: 15s;
+    animation-play-state: running;
+    animation-iteration-count: infinite;
+}
+@keyframes formSpin {
+    0%{
+        filter: hue-rotate(0deg);
+        transform: scale(1);
+
+    }
+    50%{
+        filter: hue-rotate(220deg);
+        transform: scale(1.18);
+
+
+    }
+    100%{
+            transform: translateZ(0deg);
+            transform: scale(1);
+
+        
+    }
+}

@@ -13,20 +13,20 @@ const routes: Routes = [
   {
   path: 'login',
   component:LoginComponent,
-  data:{isRegister:FormType.login},
+  data:{formType:FormType.login},
   canActivate:[AuthGuard],
 },
 {
   path: 'register',
   component:LoginComponent,
-  data:{isRegister:FormType.register},
+  data:{formType:FormType.register},
   canActivate:[AuthGuard],
   
 },
 {
   path: 'resetPassword',
   component:LoginComponent,
-  data:{isRegister:FormType.resetPassword},
+  data:{formType:FormType.resetPassword},
   canActivate:[AuthGuard],
   
 },
