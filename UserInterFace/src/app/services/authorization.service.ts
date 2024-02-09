@@ -9,7 +9,8 @@ import {
   signInWithPopup,
   signOut,
   sendEmailVerification,
-  User
+  User,
+  AuthProvider
 } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 @Injectable({
@@ -110,7 +111,7 @@ export class AuthorizationService {
 
 
     //Pop Up Provider
-    loginWithPopup(provider :any) {
+    loginWithPopup(provider :AuthProvider) {
       return signInWithPopup(this.auth,provider).then(() => {
         this.router.navigate(['dashboard/inbox']);
       });

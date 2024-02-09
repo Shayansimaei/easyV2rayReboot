@@ -13,7 +13,7 @@ export class AppComponent implements AfterViewInit {
   @ViewChild('menu')
   ionMenu!:IonMenu;
   public appPages = [
-    { title: 'Inbox', url: '/folder/inbox', icon: 'mail' },
+    { title: 'Dashboard', url: '/dashboard', icon: 'home' },
     { title: 'Outbox', url: '/folder/outbox', icon: 'paper-plane' },
     { title: 'Favorites', url: '/folder/favorites', icon: 'heart' },
     { title: 'Archived', url: '/folder/archived', icon: 'archive' },
@@ -28,7 +28,7 @@ export class AppComponent implements AfterViewInit {
     
   }
   async ngAfterViewInit(){
-    console.log(await this.ionMenu.close());
+    await this.ionMenu.close()
     
   }
   signOut():void{

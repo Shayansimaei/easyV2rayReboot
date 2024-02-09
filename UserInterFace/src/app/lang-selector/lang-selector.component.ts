@@ -1,5 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import { Component, Inject, OnChanges, OnInit } from '@angular/core';
+import { Component, EventEmitter, Inject, OnChanges, OnInit, Output } from '@angular/core';
 import { TranslateService } from '@tolgee/ngx';
 @Component({
   selector: 'lang-selector',
@@ -7,11 +7,11 @@ import { TranslateService } from '@tolgee/ngx';
   styleUrls: ['./lang-selector.component.scss'],
 })
 export class LangSelectorComponent  implements OnInit {
-
+  @Output()onLangChange = new EventEmitter<void>();
   constructor(public langService:TranslateService) { }
   ngOnInit() {
     this.modifyLang()
-    this.langService.tolgee.on("update",()=>this.modifyLang());
+    this.langService.tolgee.on("update",()=>{this.modifyLang();this.onLangChange.emit()});
 
   }
   modifyLang():void{
