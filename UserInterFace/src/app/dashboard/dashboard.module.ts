@@ -8,6 +8,7 @@ import { DashboardPageRoutingModule } from './dashboard.routing.module';
 
 import { DashboardPage } from './dashboard.page';
 import { HeaderComponent } from '../header/header.component';
+import { NgxTolgeeModule } from '@tolgee/ngx';
 
 @NgModule({
   imports: [
@@ -15,7 +16,10 @@ import { HeaderComponent } from '../header/header.component';
     FormsModule,
     IonicModule,
     DashboardPageRoutingModule,
+    NgxTolgeeModule
   ],
-  declarations: [DashboardPage,HeaderComponent]
+  declarations: [DashboardPage,HeaderComponent],
+  
+  
 })
 export class FolderPageModule {}

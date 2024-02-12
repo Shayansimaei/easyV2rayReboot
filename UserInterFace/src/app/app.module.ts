@@ -19,7 +19,6 @@ import {
   TOLGEE_INSTANCE,
   FormatSimple,
   LanguageStorage,
-  LanguageDetector,
   BackendFetch,
 } from '@tolgee/ngx';
 import { LangSelectorComponent } from './lang-selector/lang-selector.component';
@@ -73,6 +72,7 @@ import { LangSelectorComponent } from './lang-selector/lang-selector.component';
       },
     },
   ],
+  exports:[NgxTolgeeModule],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

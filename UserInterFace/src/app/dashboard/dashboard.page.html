@@ -1,14 +1,59 @@
 <div class="ion-page" id="main-content">
-<headerComponent [title]="folder"></headerComponent>
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">{{ folder }}</ion-title>
-    </ion-toolbar>
-  </ion-header>
-  <div id="container">
-    <strong class="capitalize">{{ folder }}</strong>
-    <p>Explore <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
-</ion-content>
-<div>
+  <headerComponent title="{{'Dashboard'|translate}}"></headerComponent>
+  <ion-content [fullscreen]="true">
+    <ion-grid
+      ><ion-row>
+        <div class="search-container">
+          <ion-col size="12" size-md="6" size-lg="4"
+            ><ion-searchbar
+              animated="true"
+              placeholder="{{'Group or Server'|translate}}"
+            ></ion-searchbar
+          ></ion-col>
+        </div>
+      </ion-row>
+    </ion-grid>
+    <ion-header collapse="condense">
+      <ion-toolbar> </ion-toolbar>
+    </ion-header>
+
+    <main>
+      <ion-list [inset]="true">
+          <ion-accordion-group *ngFor="let group of servers">
+            <ion-item *ngIf="!group.Servers?.length;else grouped">
+                <ion-label>{{group.Name}}</ion-label>
+              </ion-item>
+            <ng-template #grouped>
+                <ion-accordion >
+                  <ion-item slot="header">
+                    <ion-label>{{group.Name}}</ion-label>
+                  </ion-item>
+                  <ion-list lines="inset" slot="content">
+                    <ion-item *ngFor="let server of group.Servers" >
+                      <ion-label>{{server.Name}}</ion-label>
+                    </ion-item>
+                  </ion-list>
+                </ion-accordion>
+            </ng-template>
+          </ion-accordion-group>
+        </ion-list>
+      </main>
+
+    <ion-fab  [activated]="true" size="4" slot="fixed" vertical="bottom" horizontal="start" >
+      <ion-fab-button>
+        <ion-icon name="grid-outline"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-list side="top">
+        <ion-button>
+          <ion-title> {{'Add a single server'| translate}}</ion-title
+          ><ion-icon name="add-outline"></ion-icon>
+        </ion-button>
+        <ion-button>
+          <ion-title> {{'Add new Group'| translate}}</ion-title
+          ><ion-icon name="folder-outline"></ion-icon>
+        </ion-button>
+      </ion-fab-list>
+    </ion-fab>
+  </ion-content>
+  <div></div>
+</div>
