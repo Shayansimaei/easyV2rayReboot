@@ -22,9 +22,12 @@ import {
   BackendFetch,
 } from '@tolgee/ngx';
 import { LangSelectorComponent } from './lang-selector/lang-selector.component';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { TokenInterceptor } from './interceptors/token-interceptor.interceptor';
 @NgModule({
   declarations: [AppComponent, LoginComponent, LangSelectorComponent],
   imports: [
+    HttpClientModule,
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
@@ -33,10 +36,17 @@ import { LangSelectorComponent } from './lang-selector/lang-selector.component';
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
     provideAuth(() => getAuth()),
     NgxTolgeeModule,
+    
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     AuthorizationService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true,
+    },
+
     {
       provide: TOLGEE_INSTANCE,
       useFactory: () => {
@@ -55,14 +65,10 @@ import { LangSelectorComponent } from './lang-selector/lang-selector.component';
             apiUrl: environment.tolgee.tolgeeApiUrl,
             apiKey: environment.tolgee.tolgeeApiKey,
             staticData: {
-              'en:namespaced': () =>
-                import('../i18n/namespaced/en.json'),
-              'fa:namespaced': () =>
-                import('../i18n/namespaced/fa.json'),
-              'zh:namespaced': () =>
-                import('../i18n/namespaced/zh.json'),
-              'ru:namespaced': () =>
-                import('../i18n/namespaced/ru.json'),
+              'en:namespaced': () => import('../i18n/namespaced/en.json'),
+              'fa:namespaced': () => import('../i18n/namespaced/fa.json'),
+              'zh:namespaced': () => import('../i18n/namespaced/zh.json'),
+              'ru:namespaced': () => import('../i18n/namespaced/ru.json'),
               en: () => import('../i18n/en.json'),
               fa: () => import('../i18n/fa.json'),
               zh: () => import('../i18n/zh.json'),
@@ -72,7 +78,7 @@ import { LangSelectorComponent } from './lang-selector/lang-selector.component';
       },
     },
   ],
-  exports:[NgxTolgeeModule],
+  exports: [NgxTolgeeModule],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

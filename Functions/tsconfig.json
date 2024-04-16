@@ -4,7 +4,8 @@
     "module": "commonjs",
     "outDir": "./",
     "noImplicitAny": false,
-    "strictNullChecks": false
+    "strictNullChecks": false,
+    "resolveJsonModule":true
   },
   "include": [
     "src/**/*.ts"

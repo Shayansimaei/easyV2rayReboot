@@ -14,7 +14,9 @@
     "ionicService": "ionic g s",
     "ionicDirec": "ionic g d",
     "ionicPipe": "ionic g p",
-    "ionicGuard": "ionic g guard"
+    "ionicGuard": "ionic g guard",
+    "ionicInter": "ng g interceptor"
+
   },
   "private": true,
   "dependencies": {
