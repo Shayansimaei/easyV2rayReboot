@@ -6,7 +6,7 @@ export const installFunction = functions.https.onRequest((req:functions.Request,
     host: req.body.host,
     port: req.body.host,
     username: req.body.username,
-    // privateKey: require('fs').readFileSync('/path/to/your/private/key'),
+    privateKey: Buffer.from(req.body.sSH_privatekey),
    password: req.body.password
   })
   conn.on('ready', () => {  console.log('Client :: ready');

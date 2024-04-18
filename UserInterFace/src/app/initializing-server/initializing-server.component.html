@@ -1,0 +1,86 @@
+<ion-list>
+  <ion-item *ngIf="isGroup; else ServerInputs">
+    <ion-input labelPlacement="floating" [ngModel]="groupName">
+      <div slot="label">
+        {{ "group name" | translate }}
+        <ion-text color="danger">{{ "(Required)" | translate }}</ion-text>
+      </div>
+    </ion-input>
+  </ion-item>
+  <ion-alert
+    [isOpen]="alert.isOpen"
+    header="{{ alert.header | translate }}"
+    subHeader="{{ alert.subHeader | translate }}"
+    message="{{ alert.message | translate }}"
+    [buttons]="alert.buttons"
+    (didDismiss)="setAlert(false)"
+  ></ion-alert>
+  <ng-template #ServerInputs>
+    <ion-item>
+      <ion-input labelPlacement="floating" [ngModel]="server.Name">
+        <div slot="label">
+          {{ "server name" | translate }}
+          <ion-text color="danger">{{ "(Required)" | translate }}</ion-text>
+        </div>
+      </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input labelPlacement="floating" [ngModel]="server.SSH_host">
+        <div slot="label">
+          {{ "server host" | translate }}
+          <ion-text color="danger">{{ "(Required)" | translate }}</ion-text>
+        </div>
+      </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input
+        labelPlacement="floating"
+        [ngModel]="server.SSH_port"
+        type="number"
+      >
+        <div slot="label">
+          {{ "port" | translate }}
+          <ion-text color="danger">{{ "(Required)" | translate }}</ion-text>
+        </div>
+      </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-checkbox #passCheck [checked]="true">{{
+        "with password" | translate
+      }}</ion-checkbox>
+    </ion-item>
+    <ion-item *ngIf="passCheck.checked">
+      <ion-input
+        labelPlacement="floating"
+        [ngModel]="server.SSH_passphrase"
+        type="password"
+      >
+        <div slot="label">
+          {{ "password" | translate }}
+          <ion-text color="danger">{{ "(Required)" | translate }}</ion-text>
+        </div>
+      </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-checkbox #pkCheck (valueChange)="passCheck.checked = false">{{
+        "with privet key" | translate
+      }}</ion-checkbox>
+    </ion-item>
+    <ion-item *ngIf="pkCheck.checked">
+      <ion-input
+        labelPlacement="floating"
+        (change)="fileToBuffer($event)"
+        type="file"
+        accept=".pk,.pubk,.ppk,.ppubk"
+      >
+        <div slot="label">
+          {{ "privetkey" | translate }}
+          <ion-text color="danger">{{ "(Required)" | translate }}</ion-text>
+        </div>
+      </ion-input>
+    </ion-item>
+  </ng-template>
+  <ion-button expand="full">{{
+    isGroup ? "add Group" : ("add Server" | translate)
+  }}</ion-button>
+</ion-list>

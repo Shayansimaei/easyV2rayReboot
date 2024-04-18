@@ -9,6 +9,8 @@ import { DashboardPageRoutingModule } from './dashboard.routing.module';
 import { DashboardPage } from './dashboard.page';
 import { HeaderComponent } from '../header/header.component';
 import { NgxTolgeeModule } from '@tolgee/ngx';
+import { DialogComponent } from '../dialog/dialog.component';
+import { InitializingServerComponent } from '../initializing-server/initializing-server.component';
 
 @NgModule({
   imports: [
@@ -16,9 +18,10 @@ import { NgxTolgeeModule } from '@tolgee/ngx';
     FormsModule,
     IonicModule,
     DashboardPageRoutingModule,
-    NgxTolgeeModule
+    NgxTolgeeModule,
+    
   ],
-  declarations: [DashboardPage,HeaderComponent],
+  declarations: [DashboardPage,HeaderComponent,DialogComponent,InitializingServerComponent],
   
   
 })

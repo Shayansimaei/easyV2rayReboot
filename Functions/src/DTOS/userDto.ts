@@ -1,3 +1,4 @@
+import { UUID } from "crypto";
 import { UserRecord } from "firebase-admin/auth";
 
 export interface UserDto {
@@ -7,12 +8,13 @@ export interface UserDto {
     // ...
   }
   interface ServerDto {
-    Name?:string;
+    id:UUID;
+    name?:string;
     host?:string;
     user?:string;
-    SSH_privatekey?:File;
+    sSH_privatekey?:ArrayBuffer;
     password?:string;
-    OperatingSystem?:string;
-    Servers?:ServerDto[];
+    operatingSystem?:string;
+    servers?:ServerDto[];
 }
   

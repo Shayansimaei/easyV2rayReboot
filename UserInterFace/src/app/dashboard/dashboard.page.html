@@ -44,11 +44,11 @@
         <ion-icon name="grid-outline"></ion-icon>
       </ion-fab-button>
       <ion-fab-list side="top">
-        <ion-button>
+        <ion-button (click)="showDialog(false)">
           <ion-title> {{'Add a single server'| translate}}</ion-title
           ><ion-icon name="add-outline"></ion-icon>
         </ion-button>
-        <ion-button>
+        <ion-button  (click)="showDialog(true)">
           <ion-title> {{'Add new Group'| translate}}</ion-title
           ><ion-icon name="folder-outline"></ion-icon>
         </ion-button>
