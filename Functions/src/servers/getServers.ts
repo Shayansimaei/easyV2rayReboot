@@ -1,33 +1,59 @@
 import * as admin from 'firebase-admin';
 import { UserDto } from '../DTOS/userDto';
 import * as functions from 'firebase-functions';
-
+import { randomUUID } from 'crypto';
+import { dataMaker } from '../dataMaker/dataMaker';
 
   const db = admin.firestore();
 
 
   
   export async function getUserData(req):Promise<UserDto>{
-    const userDocRef = db.collection('usersServers').doc(req.user.uid);
-  
+    const data = new dataMaker(req);
+    const userDocRef = db.collection('usersData').doc(req.user.uid);
     const doc = await userDocRef.get();
   
     if (!doc.exists) {
-      await userDocRef.set(await makeInitialData(req));
-      return makeInitialData(req);
+      await userDocRef.set(await data.init());
+      return data.init();
     } else {
       return doc.data()as UserDto;
     }
   }
-  async function makeInitialData(req):Promise<UserDto> {
-    let defaultUserData:UserDto
-    defaultUserData.user = req.user;
-    defaultUserData.servers = [];
-    return defaultUserData;
+  export async function putGroup(req):Promise<UserDto>{
+    const data = new dataMaker(req);
+    const userDocRef = db.collection('usersData').doc(req.user.uid);
+    const doc = await userDocRef.get();
+  
+    if (!doc.exists) {
+      await userDocRef.set(await data.addNewGroup());
+      return data.addNewGroup();
+    } else {
+      return doc.data()as UserDto;
+    }
   }
-  export const getservers = functions.https.onRequest((req:any, res) => {
+  
+  export const getUserComplete = functions.https.onRequest((req:any, res) => {
     getUserData(req.user.uid).then((data) => {
-      res.send(data.servers);
+      res.send(data);
     });
   });
+  export const getJustGroups = functions.https.onRequest((req:any, res) => {
+    getUserData(req.user.uid).then((data) => {
+      data.groups.forEach(group => {
+        group.servers = [];
+      });
+      res.send(data);
+    });
+  });  
+  export const AddGroup = functions.https.onRequest((req:any, res) => {
+    getUserData(req.user.uid).then((data) => {
+      data.groups.forEach(group => {
+        group.servers = [];
+      });
+      
+      res.send(data);
+    });
+  }); 
+  
   

@@ -1,9 +1,9 @@
 import * as express from 'express';
 import { installFunction } from '../install/install';
-import { getservers } from '../servers/getServers';
+import { getUserData,putGroup } from '../servers/getServers';
 const router = express.Router();
-router.get('/getServers', getservers);
-
+router.get('/getServers', getUserData);
+router.put('/AddGroup', putGroup);
 router.post('/install', installFunction);
 
 export default router;

@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AlertButton } from '@ionic/angular';
+import { GroupDto } from 'src/Types/interfaces/Group.dto';
 import { ServerDto } from 'src/Types/interfaces/Server.dto';
 
 @Component({
@@ -11,6 +12,7 @@ export class InitializingServerComponent implements OnInit {
   @Input() isGroup: boolean = false;
   @Input() server: ServerDto = {};
   @Input() groupName: string = '';
+  @Input() groups: GroupDto[] =[];
 
   constructor() {}
   showAlert: boolean = false;

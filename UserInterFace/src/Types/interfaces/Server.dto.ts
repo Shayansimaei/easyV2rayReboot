@@ -9,5 +9,4 @@ export interface ServerDto
     SSH_passphrase?: string;
     OperatingSystem?: string;
     ConnectionLink?: string;
-    Servers?: ServerDto[];
 }
