@@ -4,6 +4,8 @@ import { ModalController } from '@ionic/angular';
 import { ServerDto } from 'src/Types/interfaces/Server.dto';
 import { DialogComponent } from '../dialog/dialog.component';
 import { InitializingServerComponent } from '../initializing-server/initializing-server.component';
+import { DataService } from '../services/data-service.service';
+import { GroupDto } from 'src/Types/interfaces/Group.dto';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,11 +14,11 @@ import { InitializingServerComponent } from '../initializing-server/initializing
 })
 export class DashboardPage implements OnInit {
   private activatedRoute = inject(ActivatedRoute);
-  public servers:ServerDto[]=[
-    {Name:"simple",Servers:[]},{Name:"group1",Servers:[{Name:"server 1"},{Name:"server 2"}]},{Name:"group2",Servers:[{Name:"server 1"},{Name:"server 2"}]}
-  ];
-  constructor(private modalController: ModalController) {}
-  ngOnInit() {
+  public groups:GroupDto[]=[];
+  constructor(private modalController: ModalController,private backendService:DataService) {}
+  async ngOnInit() {
+    this.groups=await this.backendService.getData("getServers");
+    console.log(this.groups);
   }
   async showDialog(isGroup: boolean, server?: ServerDto) {
     const modal = await this.modalController.create({

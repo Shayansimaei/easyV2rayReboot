@@ -19,8 +19,8 @@
 
     <main>
       <ion-list [inset]="true">
-          <ion-accordion-group *ngFor="let group of servers">
-            <ion-item *ngIf="!group.Servers?.length;else grouped">
+          <ion-accordion-group *ngFor="let group of groups">
+            <ion-item *ngIf="!group.Servers;else grouped">
                 <ion-label>{{group.Name}}</ion-label>
               </ion-item>
             <ng-template #grouped>

@@ -3,7 +3,7 @@ import { UserRecord } from "firebase-admin/auth";
 
 export interface UserDto {
   // Define the properties of UserDto here
-  user: UserRecord;
+  user: UserRecord|undefined;
   groups: GroupsDto[];
  
   // ...
@@ -16,6 +16,7 @@ interface GroupsDto {
 }
 interface ServerDto {
   id: UUID;
+  groupUuid: UUID;
   name?: string;
   host?: string;
   user?: string;

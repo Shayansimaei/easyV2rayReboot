@@ -9,23 +9,31 @@ import { dataMaker } from '../dataMaker/dataMaker';
 
   
   export async function getUserData(req):Promise<UserDto>{
-    const data = new dataMaker(req);
-    const userDocRef = db.collection('usersData').doc(req.user.uid);
-    const doc = await userDocRef.get();
-  
-    if (!doc.exists) {
-      await userDocRef.set(await data.init());
-      return data.init();
-    } else {
-      return doc.data()as UserDto;
+
+    try{
+      const data = new dataMaker(req.user);
+      const userDocRef = db.collection(`usersData`).doc(`${req.user.uid}`);
+      let doc = await userDocRef.get();
+      if (!doc.exists) {
+        const newData= await data.init();
+        console.log(newData)
+        await userDocRef.set(newData as UserDto);
+        const doc = await userDocRef.get()
+        return doc.data() as UserDto;
+      } else {
+        return doc.data() as UserDto;
+      }
+    }catch(e){
+      console.log(e);
     }
   }
-  export async function putGroup(req):Promise<UserDto>{
+  export async function putGroup(req,res):Promise<UserDto>{
     const data = new dataMaker(req);
-    const userDocRef = db.collection('usersData').doc(req.user.uid);
+    const userDocRef = db.collection('usersData').doc(req.uid);
     const doc = await userDocRef.get();
   
     if (!doc.exists) {
+      db.collection('usersData').doc(req.uid).set(await data.addNewGroup());
       await userDocRef.set(await data.addNewGroup());
       return data.addNewGroup();
     } else {
@@ -34,12 +42,18 @@ import { dataMaker } from '../dataMaker/dataMaker';
   }
   
   export const getUserComplete = functions.https.onRequest((req:any, res) => {
-    getUserData(req.user.uid).then((data) => {
-      res.send(data);
-    });
+    try{
+      getUserData(req).then((data) => {
+                return res.send(data);
+      }).catch(e => res.send(e));
+    }
+    catch(e){
+      res.send(e);
+    }
+    
   });
   export const getJustGroups = functions.https.onRequest((req:any, res) => {
-    getUserData(req.user.uid).then((data) => {
+    getUserData(req).then((data) => {
       data.groups.forEach(group => {
         group.servers = [];
       });
@@ -47,7 +61,7 @@ import { dataMaker } from '../dataMaker/dataMaker';
     });
   });  
   export const AddGroup = functions.https.onRequest((req:any, res) => {
-    getUserData(req.user.uid).then((data) => {
+    getUserData(req.user).then((data) => {
       data.groups.forEach(group => {
         group.servers = [];
       });

@@ -42,12 +42,6 @@ import { TokenInterceptor } from './interceptors/token-interceptor.interceptor';
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     AuthorizationService,
     {
-      provide: HTTP_INTERCEPTORS,
-      useClass: TokenInterceptor,
-      multi: true,
-    },
-
-    {
       provide: TOLGEE_INSTANCE,
       useFactory: () => {
         return Tolgee()
@@ -76,6 +70,11 @@ import { TokenInterceptor } from './interceptors/token-interceptor.interceptor';
             },
           });
       },
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true,
     },
   ],
   exports: [NgxTolgeeModule],

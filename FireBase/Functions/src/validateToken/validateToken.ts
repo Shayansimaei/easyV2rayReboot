@@ -2,7 +2,6 @@ import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 export const validateFirebaseIdToken = async (req: any, res: functions.Response, next: () => void) => {
     console.log('Check if request is authorized with Firebase ID token');
-    
     if ((!req.headers.authorization || !req.headers.authorization.startsWith('Bearer ')) &&
         !(req.cookies && req.cookies.__session)) {
         console.error('No Firebase ID token was passed as a Bearer token in the Authorization header.',
@@ -26,7 +25,7 @@ export const validateFirebaseIdToken = async (req: any, res: functions.Response,
     }
     try {
         const decodedIdToken = await admin.auth().verifyIdToken(idToken);
-        console.log('ID Token correctly decoded', decodedIdToken);
+        // console.log('ID Token correctly decoded', decodedIdToken);
         req.user = decodedIdToken; // Cast 'req' to CustomRequest type
         next();
         return;

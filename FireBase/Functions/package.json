@@ -1,19 +1,29 @@
 {
   "name": "functions",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "firebase functions for the project",
+  "main": "dist/index.cjs",
   "type": "module",
   "scripts": {
     "build": "webpack --mode=development",
     "serve": "npm run build && firebase emulators:start --only functions",
-    "shell": "npm run build && firebase functions:shell"
+    "shell": "firebase"
   },
-  "keywords": [],
+  "keywords": [
+    "v2ray",
+    "firebase",
+    "functions",
+    "ssh2",
+    "firebase-admin",
+    "firebase-functions",
+    "v2rayUi",
+    "AutoV2ray"
+  ],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^20.11.17",
+    "firebase-tools": "^13.7.3",
     "ts-loader": "^9.5.1",
     "typescript": "^5.3.3",
     "webpack-cli": "^5.1.4",

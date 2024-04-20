@@ -15,7 +15,8 @@ export const environment = {
   },
   tolgee:{
     tolgeeApiUrl: 'https://app.tolgee.io',
-    tolgeeApiKey: 'tgpak_guzdcnc7ozvdem3wojvgc4lomi3hc33qny4wg5rrorywmnjwmq'  }
+    tolgeeApiKey: 'tgpak_guzdcnc7ozvdem3wojvgc4lomi3hc33qny4wg5rrorywmnjwmq'  },
+    baseUrl: 'http://127.0.0.1:5001/easyv2ray/us-central1/app/',
 };
 
 /*

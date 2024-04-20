@@ -1,13 +1,14 @@
 'use strict';
+
 var nodeExternals = require('webpack-node-externals');
 
 module.exports = {
-    entry: './src/init.ts',
+    entry: './init.ts',
     output: {
-        filename: 'index.js', // <-- Important
+        filename: 'index.cjs', // <-- Important
         libraryTarget: 'this' // <-- Important
     },
-    target: 'node', // <-- Important
+    target: 'node21', // <-- Important
     module: {
         rules: [
             {

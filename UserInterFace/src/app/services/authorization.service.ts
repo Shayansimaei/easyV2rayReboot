@@ -45,7 +45,11 @@ export class AuthorizationService {
       return user;
     }
 
-
+    getToken(){
+      const token = localStorage.getItem('user')
+      const user = JSON.parse(token as string);
+      return user.stsTokenManager.accessToken;
+    }
     //Check wither User Is looged in or not
     get isLoggedIn(): boolean {
       const token = localStorage.getItem('user')
