@@ -2,6 +2,7 @@ import {
   AfterViewInit,
   Component,
   ComponentFactoryResolver,
+  Inject,
   Input,
   ViewChild,
   ViewContainerRef,
@@ -16,25 +17,26 @@ import { ModalController } from '@ionic/angular';
 export class DialogComponent implements AfterViewInit {
   @Input() component: any;
   @Input() componentInputs!: Object;
+  @Input() dialogName: string = '';
 
   @ViewChild('dynamicComponentContainer', { read: ViewContainerRef })
   container!: ViewContainerRef;
 
   constructor(
-    private modalController: ModalController,
-    private componentFactoryResolver: ComponentFactoryResolver
+    private componentFactoryResolver: ComponentFactoryResolver,
+    @Inject(ModalController) private modalController: ModalController
   ) {}
   ngAfterViewInit(): void {
     const factory = this.componentFactoryResolver.resolveComponentFactory(
       this.component
     );
-  
-    let componentRef=this.container.createComponent(factory);
-    if(this.componentInputs)
-     Object.keys(this.componentInputs).forEach((key) => { 
-    componentRef.setInput(key, (this.componentInputs as any)[key])
-  });
-}
+
+    let componentRef = this.container.createComponent(factory);
+    if (this.componentInputs)
+      Object.keys(this.componentInputs).forEach((key) => {
+        componentRef.setInput(key, (this.componentInputs as any)[key]);
+      });
+  }
 
   dismiss() {
     this.modalController.dismiss();

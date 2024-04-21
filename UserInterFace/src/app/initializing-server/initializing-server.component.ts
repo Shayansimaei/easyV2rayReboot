@@ -1,7 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { AlertButton } from '@ionic/angular';
+import { AlertButton, ModalController } from '@ionic/angular';
 import { GroupDto } from 'src/Types/interfaces/Group.dto';
 import { ServerDto } from 'src/Types/interfaces/Server.dto';
+import { DataService } from '../services/data-service.service';
+import { UserDto } from 'src/Types/interfaces/User.dto';
 
 @Component({
   selector: 'app-initializing-server',
@@ -11,10 +13,9 @@ import { ServerDto } from 'src/Types/interfaces/Server.dto';
 export class InitializingServerComponent implements OnInit {
   @Input() isGroup: boolean = false;
   @Input() server: ServerDto = {};
-  @Input() groupName: string = '';
+  @Input() group: GroupDto = {id:"",name:'',isInit:false};
   @Input() groups: GroupDto[] =[];
-
-  constructor() {}
+  constructor(private backendService:DataService,private modalController: ModalController) {}
   showAlert: boolean = false;
   alert: Alert = {
     isOpen: false,
@@ -128,6 +129,53 @@ export class InitializingServerComponent implements OnInit {
       message: message || '',
       buttons: buttons || [],
     };
+  }
+  changeGroup(event: any){
+    this.server.Group=this.groups.find((group)=>group.id==event.detail.value);
+  }
+   async saveGroup(){
+    let outData:UserDto;
+
+    if(this.group.id.length===0){
+      if (this.group.name && this.group.name.length<2){
+        this.setAlert(
+          true,
+          'Error',
+          'Group name is short',
+          'name must be more than 3 characters',
+          [
+            {
+              text: 'OK',
+              handler: () => {
+                this.alert.isOpen = false;
+              },
+            },
+          ]
+        );
+        return;
+      }
+      else if (this.group.name && this.group.name.length>15){
+        this.setAlert(
+          true,
+          'Error',
+          'Group name is too long',
+          'name must be more than less than 15 characters',
+          [
+            {
+              text: 'OK',
+              handler: () => {
+                this.alert.isOpen = false;
+              },
+            },
+          ]
+        );
+        return;
+      } else{
+      outData= await this.backendService.postData("addGroup",this.group);
+      await this.modalController.dismiss(outData,'save');
+      }
+    }
+
   }
 }
 type Alert = {

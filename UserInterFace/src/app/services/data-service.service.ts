@@ -20,7 +20,7 @@ export class DataService {
     return this.http.put(this.baseUrl + url, data).toPromise();
   }
 
-  async deleteData(url: string) {
+  async deleteData(url: string):Promise<any> {
     return this.http.delete(this.baseUrl + url).toPromise();
   }
 }

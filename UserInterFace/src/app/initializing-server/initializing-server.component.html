@@ -1,6 +1,6 @@
 <ion-list>
   <ion-item *ngIf="isGroup; else ServerInputs">
-    <ion-input labelPlacement="floating" [ngModel]="groupName">
+    <ion-input labelPlacement="floating" [(ngModel)]="group.name">
       <div slot="label">
         {{ "group name" | translate }}
         <ion-text color="danger">{{ "(Required)" | translate }}</ion-text>
@@ -21,11 +21,12 @@
         <ion-select
           label="{{ 'servers group' | translate }}"
           placeholder="{{ 'servers group' | translate }}"
+          [ngModel]="server.Group?.id" (ngModelChange)="changeGroup($event)"
         >
           <ion-select-option
             *ngFor="let group of groups"
-            [value]="group.Uuid"
-            >{{ group.Name }}</ion-select-option
+            [value]="group.id"
+            >{{ group.name }}</ion-select-option
           >
         </ion-select>
       </ion-item>
@@ -94,7 +95,7 @@
       </ion-item>
     </ion-list>
   </ng-template>
-  <ion-button expand="full">{{
+  <ion-button expand="full" (click)="saveGroup()">{{
     isGroup ? "add Group" : ("add Server" | translate)
   }}</ion-button>
 </ion-list>

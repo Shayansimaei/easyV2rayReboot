@@ -1,29 +1,27 @@
 import { randomUUID } from "crypto";
-import { UserDto } from "../DTOS/userDto";
-import { UserMetadata } from "firebase-admin/auth";
+import { GroupDto, UserDto } from "../DTOS/userDto";
+import { UserMetadata, UserRecord } from "firebase-admin/auth";
 
 export class dataMaker {
   req: any;
-  constructor(req: any) {
-    this.req = req;
+  constructor() {
   }
   public defaultUserData: UserDto= {  user: undefined, groups: [] };
-  async init(): Promise<UserDto> {
-    this.defaultUserData.user = this.req;
+  async init(req:UserRecord): Promise<UserDto> {
+    this.defaultUserData.user = req;
     this.defaultUserData.groups = [
       { id: randomUUID(), name: "single servers", servers: [], isInit: true },
     ];
     return this.defaultUserData;
   }
-  async addNewGroup(): Promise<UserDto> {
-    this.defaultUserData.user = this.req.user;
-    const newGroup = {
+  async makeNewGroup(req:any): Promise<GroupDto> {
+    const newGroup:GroupDto = {
       id: randomUUID(),
-      name: this.req.body.groupName,
-      servers: this.req.body.servers,
+      name: req.name,
+      servers: [],
       isInit: false,
     }
-    this.defaultUserData.groups.push(newGroup);
-    return this.defaultUserData;
+    
+    return newGroup;
   }
 }

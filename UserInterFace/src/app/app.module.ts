@@ -1,9 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
-
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
-
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { LoginComponent } from './login/login.component';
@@ -24,6 +22,8 @@ import {
 import { LangSelectorComponent } from './lang-selector/lang-selector.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { TokenInterceptor } from './interceptors/token-interceptor.interceptor';
+import { LoadingService } from './services/loading-service.service';
+
 @NgModule({
   declarations: [AppComponent, LoginComponent, LangSelectorComponent],
   imports: [
@@ -41,6 +41,7 @@ import { TokenInterceptor } from './interceptors/token-interceptor.interceptor';
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     AuthorizationService,
+    LoadingService,
     {
       provide: TOLGEE_INSTANCE,
       useFactory: () => {

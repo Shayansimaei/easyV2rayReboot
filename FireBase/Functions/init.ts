@@ -15,10 +15,8 @@ admin.initializeApp(firebaseConfig);
 
 import { validateFirebaseIdToken } from './src/validateToken/validateToken';
 import routes from './src/routes/routes';
-import { getUserData } from './src/servers/getServers';
-
+// Create Express app
 const app = express();
 app.use(validateFirebaseIdToken);
 app.use(routes); // Use the routes
-export const getUserDataApp= getUserData
 exports.app = onRequest({cors:true}, app);

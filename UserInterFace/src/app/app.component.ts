@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { IonMenu } from '@ionic/angular';
 import { AuthorizationService } from './services/authorization.service';
+import { LoadingService } from './services/loading-service.service';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -12,6 +13,7 @@ export class AppComponent implements AfterViewInit {
   }
   @ViewChild('menu')
   ionMenu!:IonMenu;
+  isLoading:boolean=false;
   public appPages = [
     { title: 'Dashboard', url: '/dashboard', icon: 'home' },
     { title: 'Outbox', url: '/folder/outbox', icon: 'paper-plane' },
@@ -22,7 +24,7 @@ export class AppComponent implements AfterViewInit {
   ];
   public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
   constructor(private auth:AuthorizationService) {}
-
+  
   public async isOpen(e:any):Promise<void>{
     console.log(e);
     

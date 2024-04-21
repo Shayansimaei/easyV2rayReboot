@@ -2,7 +2,8 @@ import { ServerDto } from "./Server.dto";
 
 export interface GroupDto
 {
-    Uuid?: string;
-    Name?: string;
-    Servers?: ServerDto[];
+    id: string;
+    name?: string;
+    servers?: ServerDto[];
+    isInit: boolean; 
 }

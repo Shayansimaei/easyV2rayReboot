@@ -1,3 +1,5 @@
+import { GroupDto } from "./Group.dto";
+
 export interface ServerDto
 {
     Uuid?: string;
@@ -9,4 +11,5 @@ export interface ServerDto
     SSH_passphrase?: string;
     OperatingSystem?: string;
     ConnectionLink?: string;
+    Group?: GroupDto;
 }
