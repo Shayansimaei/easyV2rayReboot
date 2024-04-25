@@ -37,59 +37,71 @@
 
     <main *ngIf="userData && !groupLoading, else loading">
       <ion-list [inset]="true">
-        <ion-accordion-group *ngFor="let group of userData.groups">
-          <ion-accordion>
-            <ion-item slot="header">
-              <ion-grid>
-                <ion-row>
-                  <ion-col size-md="7" size-sm="12"
-                    ><ion-label>{{group.name}}</ion-label></ion-col
-                  >
-                  <ion-col size-md="4" size-sm="12">
-                    <ion-button
-                      (click)="showDialogForServerWithKnownGroup(group,userData.groups)"
-                      shape="round"
-                      color="tertiary"
+        <ion-item>
+          <ion-badge slot="end" color="secondary"
+        >{{userData.groups?.length}}</ion-badge
+          >
+        </ion-item>
+          <ion-accordion-group
+            *ngFor="let group of userData.groups"
+            expand="inset"
+            class="glassy-content"
+          >
+            <ion-accordion>
+              <ion-item slot="header">
+                <ion-grid>
+                  <ion-row>
+                    <ion-col size-md="7" size-sm="12"
+                      ><ion-label>{{group.name}}</ion-label></ion-col
                     >
-                      <ion-icon slot="icon-only" name="add"></ion-icon>
-                    </ion-button>
-                    <ion-button
-                      shape="round"
-                      color="danger"
-                      *ngIf="!group.isInit"
-                      (click)="showAlertForDelete(group)"
-                    >
-                      <ion-icon slot="icon-only" name="trash"></ion-icon>
-                    </ion-button>
-                    <ion-button
-                      shape="round"
-                      color="secondary"
-                      *ngIf="!group.isInit"
-                    >
-                      <ion-icon slot="icon-only" name="create"></ion-icon>
-                    </ion-button>
-                  </ion-col>
-                </ion-row>
-              </ion-grid>
-            </ion-item>
-            <ion-list
-              lines="inset"
-              slot="content"
-              *ngIf="group.servers?.length;else emptyGroup"
-            >
-              <ion-item *ngFor="let server of group.servers">
-                <ion-label>{{server.Name}}</ion-label>
+                    <ion-col size-md="4" size-sm="12">
+                      <ion-button
+                        (click)="showDialogForServerWithKnownGroup(group,userData.groups)"
+                        shape="round"
+                        color="tertiary"
+                      >
+                        <ion-icon slot="icon-only" name="add"></ion-icon>
+                      </ion-button>
+                      <ion-button
+                        shape="round"
+                        color="danger"
+                        *ngIf="!group.isInit"
+                        (click)="showAlertForDelete(group)"
+                      >
+                        <ion-icon slot="icon-only" name="trash"></ion-icon>
+                      </ion-button>
+                      <ion-button
+                        (click)="showDialogForGroup(group)"
+                        shape="round"
+                        color="secondary"
+                        *ngIf="!group.isInit"
+                      >
+                        <ion-icon slot="icon-only" name="create"></ion-icon>
+                      </ion-button>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
               </ion-item>
-            </ion-list>
-            <ng-template #emptyGroup>
-              <ion-list lines="inset" slot="content">
-                <ion-item>
-                  <ion-label>{{'no server is available'| translate}}</ion-label>
+              <ion-list
+                lines="inset"
+                slot="content"
+                *ngIf="group.servers?.length;else emptyGroup"
+              >
+                <ion-item *ngFor="let server of group.servers">
+                  <ion-label>{{server.Name}}</ion-label>
                 </ion-item>
               </ion-list>
-            </ng-template>
-          </ion-accordion>
-        </ion-accordion-group>
+              <ng-template #emptyGroup>
+                <ion-list lines="inset" slot="content">
+                  <ion-item>
+                    <ion-label
+                      >{{'no server is available'| translate}}</ion-label
+                    >
+                  </ion-item>
+                </ion-list>
+              </ng-template>
+            </ion-accordion>
+          </ion-accordion-group>
       </ion-list>
     </main>
 

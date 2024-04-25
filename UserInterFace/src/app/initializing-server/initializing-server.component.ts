@@ -13,10 +13,14 @@ import { UserDto } from 'src/Types/interfaces/User.dto';
 export class InitializingServerComponent implements OnInit {
   @Input() isGroup: boolean = false;
   @Input() server: ServerDto = {};
-  @Input() group: GroupDto = {id:"",name:'',isInit:false};
-  @Input() groups: GroupDto[] =[];
-  constructor(private backendService:DataService,private modalController: ModalController) {}
+  @Input() group: GroupDto = { id: '', name: '', isInit: false };
+  @Input() groups: GroupDto[] = [];
+  constructor(
+    private backendService: DataService,
+    private modalController: ModalController
+  ) {}
   showAlert: boolean = false;
+  actionButtonName: string = '';
   alert: Alert = {
     isOpen: false,
     header: '',
@@ -24,14 +28,24 @@ export class InitializingServerComponent implements OnInit {
     message: '',
     buttons: [],
   };
-  ngOnInit() {}
+  ngOnInit() {
+    this.actionButtonName = this.isGroup
+      ? this.group.id && this.group.id.length
+        ? 'Edit group'
+        : 'Add group'
+      : 'Add server';
+      this.server={...this.server};
+      this.group={...this.group};
+  }
   fileToBuffer(event: Event) {
     const fileInput = event.target as HTMLInputElement;
     const file = fileInput.files?.[0];
     const reader = new FileReader();
     const maxSize = 1024;
     const allowedTypes = ['.pk', '.pubk', '.ppk', '.ppubk'];
-    const removeFile = () => { fileInput.value = '';}
+    const removeFile = () => {
+      fileInput.value = '';
+    };
     if (file) {
       const fileSizeInMB = file.size / (1024 * 1024);
       if (fileSizeInMB > maxSize) {
@@ -130,52 +144,56 @@ export class InitializingServerComponent implements OnInit {
       buttons: buttons || [],
     };
   }
-  changeGroup(event: any){
-    this.server.Group=this.groups.find((group)=>group.id==event.detail.value);
+  changeGroup(event: any) {
+    this.server.Group = this.groups.find(
+      (group) => group.id == event.detail.value
+    );
   }
-   async saveGroup(){
-    let outData:UserDto;
+  async saveGroup() {
+    let outData: UserDto;
 
-    if(this.group.id.length===0){
-      if (this.group.name && this.group.name.length<2){
-        this.setAlert(
-          true,
-          'Error',
-          'Group name is short',
-          'name must be more than 3 characters',
-          [
-            {
-              text: 'OK',
-              handler: () => {
-                this.alert.isOpen = false;
-              },
+    if (this.group.name && this.group.name.length < 2) {
+      this.setAlert(
+        true,
+        'Error',
+        'Group name is short',
+        'name must be more than 3 characters',
+        [
+          {
+            text: 'OK',
+            handler: () => {
+              this.alert.isOpen = false;
             },
-          ]
-        );
-        return;
-      }
-      else if (this.group.name && this.group.name.length>15){
-        this.setAlert(
-          true,
-          'Error',
-          'Group name is too long',
-          'name must be more than less than 15 characters',
-          [
-            {
-              text: 'OK',
-              handler: () => {
-                this.alert.isOpen = false;
-              },
+          },
+        ]
+      );
+      return;
+    } else if (this.group.name && this.group.name.length > 15) {
+      this.setAlert(
+        true,
+        'Error',
+        'Group name is too long',
+        'name must be more than less than 15 characters',
+        [
+          {
+            text: 'OK',
+            handler: () => {
+              this.alert.isOpen = false;
             },
-          ]
-        );
-        return;
-      } else{
-      outData= await this.backendService.postData("addGroup",this.group);
-      await this.modalController.dismiss(outData,'save');
-      }
+          },
+        ]
+      );
+      return;
+    } else {
+      console.log(this.group);
+      
+       outData = await this.backendService.postData(
+         !this.group.id.length? 'addGroup' : 'editGroup',
+         this.group
+       );
+   
+      await this.modalController.dismiss(outData, 'save');
     }
-
   }
 }
 type Alert = {

@@ -31,6 +31,7 @@ html{
     line-height: 1.3rem;
 }
 body{
+    --ion-background-color: #eef0eb;
     --ion-color-primary: #3a5a40;
     --ion-color-primary-rgb:58, 90, 64;
     --ion-color-primary-contrast: #ffffff;
@@ -85,3 +86,9 @@ body{
     --ion-color-light-contrast-rgb: 0, 0, 0;
     --ion-color-light-shade: #d7d8da;
     --ion-color-light-tint: #f5f6f9;  }
+    .glassy-content{
+        background: rgba(255, 255, 255, 0.5);
+        backdrop-filter: blur(25px);
+        border-radius: 10px;
+        padding: 10px;
+    }

@@ -1,9 +1,9 @@
-import { GroupDto } from "./Group.dto";
-import { V2rayUserDto } from "./V2rayUser.dto";
+import { UUID } from "crypto";
+import { GroupDto } from "./userDto";
 
 export interface ServerDto
 {
-    Uuid?: string;
+    Uuid?: UUID;
     Name?: string;
     SSH_host?: string;
     SSH_user?: string;
@@ -14,4 +14,12 @@ export interface ServerDto
     ConnectionLink?: string;
     Group?: GroupDto;
     V2rayUsers?: V2rayUserDto[];
+}
+export interface V2rayUserDto{
+    Email?: string;
+    Level?: number;
+    AlterId?: number;
+    Uuid?: string;
+    Security?: string;
+    // StreamSettings?: StreamSettingsDto;
 }

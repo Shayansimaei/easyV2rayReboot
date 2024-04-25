@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AlertController, ModalController } from '@ionic/angular';
 import { ServerDto } from 'src/Types/interfaces/Server.dto';
 import { DialogComponent } from '../dialog/dialog.component';
@@ -40,6 +40,7 @@ export class DashboardPage implements OnInit {
     });
     await modal.present();
     modal.onDidDismiss().then((data) => {
+      if(data.role === 'save')	
       this.userData = data.data;
     });
   }

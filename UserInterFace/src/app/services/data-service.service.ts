@@ -13,6 +13,8 @@ export class DataService {
   }
 
   async postData(url: string, data: any): Promise<any> {
+    console.log(data);
+    
     return await this.http.post(this.baseUrl + url, data).toPromise();
   }
 
