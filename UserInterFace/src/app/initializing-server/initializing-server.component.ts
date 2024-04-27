@@ -184,9 +184,7 @@ export class InitializingServerComponent implements OnInit {
         ]
       );
       return;
-    } else {
-      console.log(this.group);
-      
+    } else {      
        outData = await this.backendService.postData(
          !this.group.id.length? 'addGroup' : 'editGroup',
          this.group
@@ -194,6 +192,9 @@ export class InitializingServerComponent implements OnInit {
    
       await this.modalController.dismiss(outData, 'save');
     }
+  }
+  async saveServer() {
+    console.log(await this.backendService.postData('checkServer',this.server))
   }
 }
 type Alert = {

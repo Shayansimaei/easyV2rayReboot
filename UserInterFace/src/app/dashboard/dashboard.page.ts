@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { AlertController, ModalController } from '@ionic/angular';
 import { ServerDto } from 'src/Types/interfaces/Server.dto';
 import { DialogComponent } from '../dialog/dialog.component';
@@ -13,7 +13,7 @@ import { LoadingService } from '../services/loading-service.service';
   templateUrl: './dashboard.page.html',
   styleUrls: ['./dashboard.page.scss'],
 })
-export class DashboardPage implements OnInit {
+export class DashboardPage implements AfterViewInit {
   public userData!: UserDto;
   groupLoading: boolean = false;
   constructor(
@@ -22,7 +22,7 @@ export class DashboardPage implements OnInit {
     public loadingService: LoadingService,
     private alertController: AlertController
   ) {}
-  async ngOnInit() {
+  async ngAfterViewInit() {
     this.groupLoading = true;
     this.userData = await this.backendService.getData('getServers');
     this.groupLoading = false;

@@ -4,21 +4,21 @@ import {
   HttpHandler,
   HttpEvent,
   HttpInterceptor,
+  HttpErrorResponse,
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { finalize } from 'rxjs/operators';
+import { catchError, finalize } from 'rxjs/operators';
 import { AuthorizationService } from '../services/authorization.service';
-import { LoadingService } from '../services/loading-service.service';
+import { AlertController } from '@ionic/angular';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
-  constructor(private authorization: AuthorizationService, private loadingService: LoadingService) {}
+  constructor(private authorization: AuthorizationService, private alertController: AlertController) {}
 
   intercept(
     request: HttpRequest<any>,
     next: HttpHandler
-  ): Observable<HttpEvent<any>> {
-    this.loadingService.setLoading(true);
+  ): Observable<any> {
     const token = this.authorization.getToken();
     if (token) {
       request = request.clone({
@@ -28,6 +28,14 @@ export class TokenInterceptor implements HttpInterceptor {
         },
       });
     }
-    return next.handle(request).pipe(finalize(() => this.loadingService.setLoading(false)));
+    return next.handle(request).pipe(catchError((error: HttpErrorResponse) => this.handleError(error)));
   }
+  private async handleError(error: HttpErrorResponse) {    
+    const modal = await this.alertController.create({
+      header: 'Error',
+      message: error.error.message,
+      buttons: ['OK']
+    });
+    await modal.present();
+    }
 }

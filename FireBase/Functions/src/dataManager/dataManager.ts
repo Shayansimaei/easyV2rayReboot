@@ -1,38 +1,39 @@
 import * as functions from "firebase-functions";
 import { dbManager } from "../dbManager/dbManager";
-// export async function putGroup(req, res): Promise<UserDto> {
-//   const data = new dataMaker(req);
-//   const userDocRef = db.collection("usersData").doc(req.uid);
-//   const doc = await userDocRef.get();
+import { serverProcessor } from "../serverProcessor/serverProcessor";
 
-//   if (!doc.exists) {
-//     db.collection("usersData")
-//       .doc(req.uid)
-//       .set(await data.addNewGroup());
-//     await userDocRef.set(await data.addNewGroup());
-//     return data.addNewGroup();
-//   } else {
-//     return doc.data() as UserDto;
-//   }
-// }
-function sendError(res, error, statusCode) {
-  res.status(statusCode).send({ error: error });
+export function errorHandler(err: any, req: Request, res: functions.Response, next: any) {
+  console.error(err.stack); // Log error stack trace to the console
+  res.status(500).send('Something broke!');
 }
-export const getUserComplete = functions.https.onRequest((req: any, res) => {
+
+//================================================================================================
+// group and user Data Manager
+/**
+ * Handles the editGroups function.
+ * 
+ * @param req - The HTTP request object.
+ * @param res - The HTTP response object.
+ */ 
+
+export const getUserComplete = functions.https.onRequest(
+  (req: any, res:any) => {
   try {
     new dbManager(req)
       .getUserData(req)
       .then((data) => {
         return res.send(data);
       })
-      .catch((e) => res.send(e));
-  } catch (e) {
-    sendError(res, e, 422);
+      .catch((e) => {throw new Error(e);});
   }
-});
+  catch (e) {
+    throw new Error('BROKEN')
+} 
+  }
+);
+
 export const editGroups = functions.https.onRequest((req: any, res) => {
   try {
-    console.log(req.body);
     new dbManager(req)
       .editGroup(req)
       .then(() => {
@@ -40,11 +41,12 @@ export const editGroups = functions.https.onRequest((req: any, res) => {
           res.send(data);
         });
       })
-      .catch((e) => sendError(res, e, 422));
+      .catch((e) =>{throw new Error(e);});
   } catch (e) {
-    sendError(res, e, 422);
+    throw new Error('BROKEN')
   }
 });
+
 export const addNewGroup = functions.https.onRequest((req: any, res) => {
   new dbManager(req)
     .addNewGroupToDb(req)
@@ -54,9 +56,10 @@ export const addNewGroup = functions.https.onRequest((req: any, res) => {
       });
     })
 
-    .catch((e) => sendError(res, e, 422));
+    .catch((e) => {throw new Error(e);});
 });
-export const deleteGroup = functions.https.onRequest((req: any, res) => {
+
+export const deleteGroup = functions.https.onRequest((req: any, res:any) => {
   try {
     new dbManager(req)
       .deleteGroup(req.params.groupId)
@@ -65,8 +68,25 @@ export const deleteGroup = functions.https.onRequest((req: any, res) => {
           res.send(data);
         });
       })
-      .catch((e) => sendError(res, e, 422));
+      .catch((e) => {throw new Error(e);});
   } catch (e) {
-    sendError(res, e, 422);
+    throw new Error(e)
   }
+});
+
+//================================================================================================	
+// server Data Manager
+export const serverAvailability = functions.https.onRequest((req: any, res) => {
+  try {    
+    const server=new serverProcessor();
+    const clientRes=(possibility,resp=res)=>{
+      resp.send(possibility);
+    }
+    server.connect(req.body,clientRes)
+      .then(() => {})
+      .catch((e) =>{throw new Error(e);});
+  } catch (e) {
+    throw e;
+  }
+  
 });

@@ -1,20 +1,30 @@
 import { Component, Injectable, OnInit } from '@angular/core';
+import { AlertController, LoadingController } from '@ionic/angular';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LoadingService {
-  public loading$ = new BehaviorSubject<boolean>(false);
+  constructor(private loadingCtrl: LoadingController) {}
+  async openLoading() {
+    const loading = await this.loadingCtrl.create({
+      message: 'Loading',
+      spinner:'crescent',
+      });
 
-  setLoading(isLoading: boolean) {
-    this.loading$.next(isLoading);
+    loading.present();
+  }
+  async closeLoading() {
+    const loading = await this.loadingCtrl.getTop();
+    if (loading) {
+      loading.dismiss();
+    }
   }
 }
 //  @Component({
 //   selector: 'load',
 //    template: `>
-
 
 //  `,
 //    styles: ``,

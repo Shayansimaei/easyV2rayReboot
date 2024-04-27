@@ -31,7 +31,7 @@
         </ion-select>
       </ion-item>
       <ion-item>
-        <ion-input labelPlacement="floating" [ngModel]="server.Name">
+        <ion-input labelPlacement="floating" [(ngModel)]="server.Name">
           <div slot="label">
             {{ "server name" | translate }}
             <ion-text color="danger">{{ "(Required)" | translate }}</ion-text>
@@ -39,7 +39,15 @@
         </ion-input>
       </ion-item>
       <ion-item>
-        <ion-input labelPlacement="floating" [ngModel]="server.SSH_host">
+        <ion-input labelPlacement="floating" [(ngModel)]="server.SSH_user">
+          <div slot="label">
+            {{ "server user" | translate }}
+            <ion-text color="danger">{{ "(Required)" | translate }}</ion-text>
+          </div>
+        </ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input labelPlacement="floating" [(ngModel)]="server.SSH_host">
           <div slot="label">
             {{ "server host" | translate }}
             <ion-text color="danger">{{ "(Required)" | translate }}</ion-text>
@@ -49,7 +57,7 @@
       <ion-item>
         <ion-input
           labelPlacement="floating"
-          [ngModel]="server.SSH_port"
+          [(ngModel)]="server.SSH_port"
           type="number"
         >
           <div slot="label">
@@ -66,7 +74,7 @@
       <ion-item *ngIf="passCheck.checked">
         <ion-input
           labelPlacement="floating"
-          [ngModel]="server.SSH_passphrase"
+          [(ngModel)]="server.SSH_passphrase"
           type="password"
         >
           <div slot="label">
@@ -95,7 +103,7 @@
       </ion-item>
     </ion-list>
   </ng-template>
-  <ion-button expand="full" (click)="saveGroup()">{{
+  <ion-button expand="full" (click)="isGroup?saveGroup():saveServer()">{{
    actionButtonName | translate
   }}</ion-button>
 </ion-list>

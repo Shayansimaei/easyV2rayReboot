@@ -3,23 +3,23 @@ import { GroupDto } from "./userDto";
 
 export interface ServerDto
 {
-    Uuid?: UUID;
-    Name?: string;
-    SSH_host?: string;
-    SSH_user?: string;
-    SSH_port?: number;
-    SSH_privatekey?: ArrayBuffer;
-    SSH_passphrase?: string;
-    OperatingSystem?: string;
-    ConnectionLink?: string;
-    Group?: GroupDto;
-    V2rayUsers?: V2rayUserDto[];
+    uuid?: UUID;
+    name?: string;
+    ssh_host?: string;
+    ssh_user?: string;
+    ssh_port?: number;
+    ssh_privatekey?: ArrayBuffer;
+    ssh_passphrase?: string;
+    operatingSystem?: string;
+    connectionLink?: string;
+    group?: GroupDto;
+    v2rayUsers?: V2rayUserDto[];
 }
 export interface V2rayUserDto{
-    Email?: string;
-    Level?: number;
-    AlterId?: number;
-    Uuid?: string;
-    Security?: string;
+    email?: string;
+    level?: number;
+    alterId?: number;
+    uuid?: string;
+    security?: string;
     // StreamSettings?: StreamSettingsDto;
 }

@@ -1,5 +1,6 @@
 import { UUID } from "crypto";
 import { UserRecord } from "firebase-admin/auth";
+import { ServerDto } from "./serverDto";
 
 export interface UserDto {
   // Define the properties of UserDto here
@@ -13,14 +14,4 @@ export interface GroupDto {
   name?: string;
   servers?: ServerDto[];
   isInit: boolean;
-}
-export interface ServerDto {
-  id: UUID;
-  groupUuid: UUID;
-  name?: string;
-  host?: string;
-  user?: string;
-  sSH_privatekey?: ArrayBuffer;
-  password?: string;
-  operatingSystem?: string;
 }
