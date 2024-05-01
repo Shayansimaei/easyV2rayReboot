@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "build": "webpack --mode=development",
+    "watch": "webpack --watch --mode=development",
     "serve": "npm run build && firebase emulators:start --only functions",
     "shell": "firebase"
   },

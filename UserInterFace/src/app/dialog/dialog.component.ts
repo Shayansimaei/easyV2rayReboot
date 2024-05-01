@@ -26,8 +26,8 @@ export class DialogComponent implements AfterViewInit {
     private componentFactoryResolver: ComponentFactoryResolver,
     @Inject(ModalController) private modalController: ModalController
   ) {}
-  ngAfterViewInit(): void {
-    const factory = this.componentFactoryResolver.resolveComponentFactory(
+  async ngAfterViewInit(): Promise<void> {
+    const factory = await this.componentFactoryResolver.resolveComponentFactory(
       this.component
     );
 

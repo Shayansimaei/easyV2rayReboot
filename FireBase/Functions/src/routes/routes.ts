@@ -1,23 +1,23 @@
 import * as express from "express";
-import { installFunction } from "../install/install";
 import {
   addNewGroup,
+  addNewServer,
   deleteGroup,
   editGroups,
   getUserComplete,
   serverAvailability,
 } from "../dataManager/dataManager";
 const router = express.Router();
-function functionHandler(
+const functionHandler=(
   next: any,
   handler: (req: any, res: any) => void | Promise<void>,
   req: any,
   res: any
-) {
+)=>{
   try {
     handler(req, res);
   } catch (e) {
-    next(e);
+    res.status(500).send({error: e})
   }
 }
 router.get("/getServers", (req, res, next) =>
@@ -33,9 +33,11 @@ router.post("/editGroup", (req, res, next) =>
 router.post("/addGroup", (req, res, next) =>
   functionHandler(next, addNewGroup, req, res)
 );
+router.post("/addServer", (req, res, next) =>
+  functionHandler(next, addNewServer, req, res)
+);
 
 router.delete("/deleteGroup/:groupId", (req, res, next) =>
   functionHandler(next, deleteGroup, req, res)
 );
-// router.post('/install',(req, res,next) => installFunction(req, res,next));
 export default router;

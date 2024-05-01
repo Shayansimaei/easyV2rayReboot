@@ -1,66 +1,97 @@
-import { Client } from 'ssh2';
-import { ServerDto } from '../DTOS/serverDto';
+import { Client } from "ssh2";
+import { ServerDto } from "../DTOS/serverDto";
+import { Buffer } from "buffer";
+import { EventEmitter } from "events";
+import { EventEmitterClass } from "../DTOS/eventEmitterClasses.interface";
 
-export class serverProcessor {
-    private readonly connection: Client;
-    public isConnected: boolean = false;
-    constructor() {
-        this.connection = new Client();
+export class serverProcessor implements EventEmitterClass{
+  private readonly connection: Client;
+  public isConnected: boolean = false;
+  eventEmitter: EventEmitter;
+  constructor() {
+    this.connection = new Client();
+    this.eventEmitter = new EventEmitter();
+  }
+  makeConnectionObject(req: ServerDto) {
+    let connectionObject = {
+      host: req.ssh_host,
+      port: req.ssh_port,
+      username: req.ssh_user,
+    };
+    if (req.ssh_privatekey) {
+      connectionObject["privateKey"] = Buffer.from(req.ssh_privatekey);
     }
-    makeConnectionObject(req:ServerDto){
-        
-        let connectionObject ={
-            host: req.ssh_host,
-            port: req.ssh_port,
-            username: req.ssh_user,
-        }
-        if(req.ssh_privatekey){
-            connectionObject["privateKey"] = Buffer.from(req.ssh_privatekey);
-           
-        }
-        if(req.ssh_passphrase){
-            connectionObject["password"] = req.ssh_passphrase;
-        
-        }
-        console.log(connectionObject);
+    if (req.ssh_passphrase) {
+      connectionObject["password"] = req.ssh_passphrase;
+    }
+    console.log(connectionObject);
 
-        return connectionObject;
+    return connectionObject;
+  }
+  private async connect(req: ServerDto) {
+    try {
+      await this.connection.connect(await this.makeConnectionObject(req));
+    } catch (e) {
+      throw new Error(e);
     }
-    async connect(req:ServerDto,callback:(res:boolean)=>void){
-        try{
+  }
+  emitter(emitterType: serverProcessorEvents|string, data?: any) {
+    this.eventEmitter.emit(emitterType, data);
 
-            await this.connection.connect(await this.makeConnectionObject(req));
-            await this.clientReady(callback);
-        }catch(e){
-            throw new Error(e);
-        
-        }
-    }
-    customExec(command: string) {
-        this.connection.exec(command, (err, stream) => {
-            if (err) throw err;
-            stream.on('close', (code, signal) => {
-              console.log('Stream :: close :: code: ' + code + ', signal: ' + signal);
-              this.connection.end();
-            }).on('data', (data) => {
-              console.log('STDOUT: ' + data);
-            }).stderr.on('data', (data) => {
-              console.log('STDERR: ' + data);
-            });
-          });
-    }
-    async clientReady(callback:(res:boolean)=>void):Promise<void>{
-        await this.connection.on('ready', () => {this.isConnected = true; 
-            callback(true);  
-        });
-       await  this.connection.on('error', function(err) {
-            throw new Error("serverProcessor :: error :: " + err.message);
-          });
-          
-         await this.connection.on('end', function() {
-            throw new Error('Client :: end');
-          });
-          
-    }
+  }
+  customExec(command: string,event?:string) {
     
+    if (this.isConnected) {
+      this.connection.exec(command, (err: Error | undefined, stream: any) => {
+        if (err) throw err;
+        stream
+          .on("close", (code: number, signal: string) => {
+            this.isConnected = false;
+          })
+          .on("data", (data: any) => {
+            data = Buffer.from(data).toString();            
+            this.emitter(event?event:serverProcessorEvents.onExecData, data);
+          })
+          .stderr.on("data", (data: any) => {
+            console.log(data);
+
+            this.emitter(event?event:serverProcessorEvents.onExecData, data);
+          });
+      });
+    } else {
+      throw new Error("serverProcessor :: customExec :: not connected");
+    }
+  }
+  async clientReady(req: any): Promise<void> {
+    if (!this.isConnected) await this.connect(req);
+     this.connection.on("ready", () => {
+      this.isConnected = true;
+      this.emitter(serverProcessorEvents.onReady, this.isConnected);
+    });
+     this.connection.on("error",(err)=>{
+        this.emitter(serverProcessorEvents.onError, err);
+    });
+
+     this.connection.on("end", ()=>{
+      console.log("end");
+      
+        this.emitter(serverProcessorEvents.onEnd);
+    });
+  }
+  close(){
+    this.connection.end();
+    this.emitter(serverProcessorEvents.onEnd);
+
+  }
+  on(event: string, listener: (...args: any[]) => void) {
+    this.eventEmitter.on(event, listener);
+  }
 }
+export enum serverProcessorEvents {
+  onReady = "onReady",
+  onError = "onError",
+  onEnd = "onEnd",
+  onExecData = "onExecData",
+  onExecError = "onExecError",
+}
+

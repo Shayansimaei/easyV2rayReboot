@@ -44,12 +44,12 @@ export class DashboardPage implements AfterViewInit {
       this.userData = data.data;
     });
   }
-  async showDialogForServer(server?: ServerDto, groups?: GroupDto[]) {
+  async showDialogForServer(server?: ServerDto) {
     const modal = await this.modalController.create({
       component: DialogComponent,
       componentProps: {
         component: InitializingServerComponent,
-        componentInputs: { isGroup: false, server: server, groups: groups },
+        componentInputs: { isGroup: false, server:  {SSH_host:"38.180.86.210",SSH_port:22,SSH_user:"root",SSH_passphrase:"sss1378s"}, groups: this.userData.groups },
       },
     });
     await modal.present();

@@ -31,9 +31,11 @@ export class TokenInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(catchError((error: HttpErrorResponse) => this.handleError(error)));
   }
   private async handleError(error: HttpErrorResponse) {    
+    console.log(error);
+    
     const modal = await this.alertController.create({
       header: 'Error',
-      message: error.error.message,
+      message: error.error.error || error.error.message || error.message,
       buttons: ['OK']
     });
     await modal.present();

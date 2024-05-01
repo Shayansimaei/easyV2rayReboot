@@ -12,7 +12,11 @@ import { UserDto } from 'src/Types/interfaces/User.dto';
 })
 export class InitializingServerComponent implements OnInit {
   @Input() isGroup: boolean = false;
-  @Input() server: ServerDto = {};
+  @Input() server: ServerDto = {
+    SSH_host: '38.180.86.210',
+    SSH_user: 'root',
+    SSH_passphrase: 'sss1378s',
+  };
   @Input() group: GroupDto = { id: '', name: '', isInit: false };
   @Input() groups: GroupDto[] = [];
   constructor(
@@ -34,8 +38,11 @@ export class InitializingServerComponent implements OnInit {
         ? 'Edit group'
         : 'Add group'
       : 'Add server';
-      this.server={...this.server};
-      this.group={...this.group};
+    this.server = { ...this.server };
+    this.group = { ...this.group };
+    if (!this.server.Group?.id.length && this.groups.length > 0) {
+      this.groups.forEach((group) => (this.server.Group = group));
+    }
   }
   fileToBuffer(event: Event) {
     const fileInput = event.target as HTMLInputElement;
@@ -184,17 +191,114 @@ export class InitializingServerComponent implements OnInit {
         ]
       );
       return;
-    } else {      
-       outData = await this.backendService.postData(
-         !this.group.id.length? 'addGroup' : 'editGroup',
-         this.group
-       );
-   
+    } else {
+      outData = await this.backendService.postData(
+        !this.group.id.length ? 'addGroup' : 'editGroup',
+        this.group
+      );
+
       await this.modalController.dismiss(outData, 'save');
     }
   }
   async saveServer() {
-    console.log(await this.backendService.postData('checkServer',this.server))
+    let outData: UserDto;
+
+    if (
+      this.server.Name === undefined ||
+      this.server.Name === '' ||
+      this.server.Name.length < 2
+    ) {
+      this.setAlert(
+        true,
+        'Error',
+        'Server name is short',
+        'name must be more than 3 characters',
+        [
+          {
+            text: 'OK',
+            handler: () => {
+              this.alert.isOpen = false;
+            },
+          },
+        ]
+      );
+      return;
+    } else if (this.server.Name != undefined && this.server.Name.length > 15) {
+      this.setAlert(
+        true,
+        'Error',
+        'Server name is too long',
+        'name must be more than less than 15 characters',
+        [
+          {
+            text: 'OK',
+            handler: () => {
+              this.alert.isOpen = false;
+            },
+          },
+        ]
+      );
+      return;
+    } else if (
+      this.server.SSH_user == undefined ||
+      this.server.SSH_user === ''
+    ) {
+      this.setAlert(
+        true,
+        'Error',
+        'Server user essential',
+        'user is essential',
+        [
+          {
+            text: 'OK',
+            handler: () => {
+              this.alert.isOpen = false;
+            },
+          },
+        ]
+      );
+      return;
+    } else if (this.server.SSH_port == undefined || !this.server.SSH_port) {
+      this.setAlert(
+        true,
+        'Error',
+        'Server port essential',
+        'port is essential',
+        [
+          {
+            text: 'OK',
+            handler: () => {
+              this.alert.isOpen = false;
+            },
+          },
+        ]
+      );
+      return;
+    } else if (
+      this.server.SSH_passphrase === '' &&
+      this.server.SSH_privatekey == undefined
+    ) {
+      this.setAlert(
+        true,
+        'Error',
+        'at least one of the private key or passphrase is needed',
+        'insert private key or passphrase',
+        [
+          {
+            text: 'OK',
+            handler: () => {
+              this.alert.isOpen = false;
+            },
+          },
+        ]
+      );
+      return;
+    } else {
+      outData = await this.backendService.postData('addServer', this.server);
+      console.log(outData);
+
+      await this.modalController.dismiss(outData, 'save');
+    }
   }
 }
 type Alert = {
