@@ -18,13 +18,13 @@ export class bashOperators implements EventEmitterClass {
       this.emitter(bashOperatorsEvents.operatingSystem, data);
     });
   }
-  oSRelease(connectedServer: serverProcessor) {
+  OSVersion(connectedServer: serverProcessor) {
     connectedServer.customExec(
       operatingSystemCommands.OSVersion,
-      bashOperatorsEvents.OSRelease
+      bashOperatorsEvents.OSVersion
     );
-    connectedServer.on(bashOperatorsEvents.OSRelease, (data) => {
-      this.emitter(bashOperatorsEvents.OSRelease, data);
+    connectedServer.on(bashOperatorsEvents.OSVersion, (data) => {
+      this.emitter(bashOperatorsEvents.OSVersion, data);
     });
   }
   on(event: string, listener: (...args: any[]) => void) {
@@ -36,7 +36,7 @@ export class bashOperators implements EventEmitterClass {
 }
 export enum bashOperatorsEvents {
   operatingSystem = "operatingSystem",
-  OSRelease = "OSRelease",
+  OSVersion = "OSVersion",
   onError = "onError",
   onEnd = "onEnd",
   onExecData = "onExecData",

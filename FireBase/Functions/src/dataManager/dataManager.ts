@@ -120,7 +120,7 @@ export const addNewServer = functions.https.onRequest((req: any, res) => {
         osOP.operatingSystem(serverClass);
         osOP.on(bashOperatorsEvents.operatingSystem, (data) => {                              
           if (String(data).includes("Linux")){
-            osOP.oSRelease(serverClass);
+            osOP.OSVersion(serverClass);
           }else
           {
             errorManager("Os is not supported", res, 500);
@@ -129,7 +129,7 @@ export const addNewServer = functions.https.onRequest((req: any, res) => {
         }); 
        
     };
-    osOP.on(bashOperatorsEvents.OSRelease, (data) => {
+    osOP.on(bashOperatorsEvents.OSVersion, (data) => {
       os = data;      
       // new dbManager(req)
       //   .addNewServer(req.body, os)
