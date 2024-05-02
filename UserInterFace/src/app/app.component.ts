@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
-import { IonMenu } from '@ionic/angular';
+import {IonMenu } from '@ionic/angular';
 import { AuthorizationService } from './services/authorization.service';
-import { LoadingService } from './services/loading-service.service';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -14,6 +14,7 @@ export class AppComponent implements AfterViewInit {
   @ViewChild('menu')
   ionMenu!:IonMenu;
   isLoading:boolean=false;
+  userImage:string="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50";
   public appPages = [
     { title: 'Dashboard', url: '/dashboard', icon: 'home' },
     { title: 'Outbox', url: '/folder/outbox', icon: 'paper-plane' },
@@ -24,17 +25,26 @@ export class AppComponent implements AfterViewInit {
   ];
   public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
   constructor(private auth:AuthorizationService) {}
-  
+  private userSubscription: Subscription | null = null;
+
   public async isOpen(e:any):Promise<void>{
     console.log(e);
-    
   }
+
   async ngAfterViewInit(){
-    await this.ionMenu.close()
-    
+    this.ionMenu.swipeGesture=false;
+    this.userSubscription = this.auth.user$.subscribe(user => {
+      this.userImage = user?.photoURL || "https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50";
+    });   
+    await this.ionMenu.close();
   }
+
   signOut():void{
     this.ionMenu.close();
     this.auth.Logout();
+    
+  }
+  ngOnDestroy() {
+    this.userSubscription?.unsubscribe();
   }
 }

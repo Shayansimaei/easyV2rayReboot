@@ -41,7 +41,7 @@ export class InitializingServerComponent implements OnInit {
     this.server = { ...this.server };
     this.group = { ...this.group };
     if (!this.server.Group?.id.length && this.groups.length > 0) {
-      this.groups.forEach((group) => (this.server.Group = group));
+      this.groups.forEach((group) => {if(group.isInit)this.server.Group = group});
     }
   }
   fileToBuffer(event: Event) {

@@ -48,15 +48,11 @@ export class LoginComponent implements OnInit {
         /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
       );
   };
-  goToAnotherForm(formMode:number): void {
-    if(formMode==FormType.login)
-    this.router.navigate(['/register']);
-    else if(formMode==FormType.resetPassword)
-    this.router.navigate(['/resetPassword']);
-    else
-    this.router.navigate(['/login']);
-
-
+  goToAnotherForm(formMode: number): void {
+    if (formMode == FormType.login) this.router.navigate(['/register']);
+    else if (formMode == FormType.resetPassword)
+      this.router.navigate(['/resetPassword']);
+    else this.router.navigate(['/login']);
   }
   signInWithGoogle(): void {
     this.authorization.GoogleAuth();

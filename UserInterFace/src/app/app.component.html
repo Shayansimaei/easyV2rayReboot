@@ -1,9 +1,9 @@
-<ion-app>
+<ion-app >
   <ion-menu #menu side="start" contentId="main-content" type="push">
     <ion-content>
       <lang-selector (onLangChange)="menu.close()"></lang-selector>
       <ion-thumbnail class="main-thumbnail">
-        <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
+        <img alt="Silhouette of mountains" [src]="userImage" />
       </ion-thumbnail>
       <ion-list id="inbox-list">
         <ion-menu-toggle
