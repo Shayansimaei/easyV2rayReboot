@@ -4,13 +4,19 @@ import { dataMaker } from "../dataMaker/dataMaker";
 import { ServerDto } from "../DTOS/serverDto";
 import { DocumentReference } from "firebase-admin/firestore";
 import { randomUUID } from "crypto";
-
+const errorManager = (e: any, res: any,code:number) => {
+  console.log(e);
+  
+  res.status(code|500).send({ error: e });
+}
 export class dbManager {
   db = admin.firestore();
   userDocRef:DocumentReference<UserDto>;
   serverDocRef:DocumentReference<ServerDto>;
   req:any;
-  constructor(req) {
+  res:any;
+  constructor(req,res) {
+    this.res = res;
     this.req = req;   
   }
   async getUserDocRef(): Promise<any>{
@@ -31,7 +37,7 @@ export class dbManager {
         return doc.data() as UserDto;
       }
     } catch (e) {
-      throw new Error(e);
+      errorManager(e, this.res, 500);
     }
   }
   async addNewGroupToDb(req): Promise<void> {
@@ -41,18 +47,18 @@ export class dbManager {
       let doc: any = await this.userDocRef.get();
       doc = doc.data() as UserDto;
       if (req.body.name === undefined || req.body.name === "") {
-        throw new Error("name is empty");
+        errorManager("name is empty", this.res, 500);
       }
       if (req.body.name.length > 15 || req.body.name.length < 3) {
-        throw new Error("name format is wrong");
+        errorManager("name format is wrong", this.res, 500);
       }
       if (doc.groups.length > 299) {
-        throw new Error("group limit reached | 300 groups max");
+        errorManager("group limit reached | 300 groups max", this.res, 500);
       }
       doc.groups.push(await data.makeNewGroup(req.body));
       await this.userDocRef.set(doc as UserDto);
     } catch (e) {
-      throw new Error(e);
+      errorManager(e, this.res, 500);
     }
   }
   async deleteGroup(id): Promise<void> {
@@ -62,17 +68,17 @@ export class dbManager {
       let doc: any = await this.userDocRef.get();
       doc = doc.data() as UserDto;
       if (id === undefined || id === "") {
-        throw new Error("non existing group");
+        errorManager("non existing group", this.res, 500);
       }
       doc.groups = doc.groups.filter((group) => {
         if (group.id === id && group.isInit)
-          throw new Error("can't delete init group");
+          errorManager("can't delete init group", this.res, 500);
         return group.id !== id;
       });
       await this.userDocRef.set(doc as UserDto);
       // if (!req.body.serversDelete){dont delete servers}
     } catch (e) {
-      throw new Error(e);
+      errorManager(e, this.res, 500);
     }
   }
   async editGroup(req): Promise<void> {
@@ -81,61 +87,64 @@ export class dbManager {
       let doc: any = await this.userDocRef.get();
       doc = doc.data() as UserDto;
       if (req.body.id === undefined || req.body.id === "") {
-        throw new Error("non existing group");
+        errorManager("non existing group", this.res, 500);
       }
       if (req.body.name === undefined || req.body.name === "") {
-        throw new Error("name is empty");
+        errorManager("name is empty", this.res, 500);
       }
       if (req.body.name.length > 15 || req.body.name.length < 3) {
-        throw new Error("name format is wrong");
+        errorManager("name format is wrong", this.res, 500);
       }
       if (doc.groups.length > 299) {
-        throw new Error("group limit reached | 300 groups max");
+        errorManager("group limit reached | 300 groups max", this.res, 500);
       }
       doc.groups.map((group) => {
         if (group.id === req.body.id ){
           if(group.isInit)
-            throw new Error("can't edit init group");
+            errorManager("can't edit init group", this.res, 500);
           group.name = req.body.name;
         }
       });
       await this.userDocRef.set(doc as UserDto);
     } catch (e) {
-      throw new Error(e);
+      errorManager(e, this.res, 500);
     }
   }
   async addNewServer(req): Promise<void> {
     try {
+      
       this.userDocRef = await this.getUserDocRef() ;
       let doc: any|UserDto= await this.userDocRef.get();
-      doc = doc.data() as UserDto;
-      if (req.body.id === undefined || req.body.id === "") {
+      doc = doc.data() as UserDto;      
+      if (req.body.id!||req.body.id === undefined || req.body.id === "") {
         req.body.id = randomUUID();
-      }else
-      throw new Error("Something is wrong with ths server id");
-
-      if (req.body.name === undefined || req.body.name === "") {
-        throw new Error("name is empty");
+      }else{
+      errorManager("Something is wrong with ths server id", this.res, 500);
       }
+      if (req.body.name === undefined || req.body.name === "") {
+        errorManager("name is empty", this.res, 500);
+      }
+
       if (req.body.name.length > 15 || req.body.name.length < 3) {
-        throw new Error("name format is wrong");
+        errorManager("name format is wrong", this.res, 500);
       }
       doc.groups.map(async (group) => {
         if (group.id === req.body.group.id ){
           if(group.servers.length >30)
-            throw new Error("this group has reached the limit of servers | 30 servers max");
-          group.servers.every((server) => {
+            errorManager("this group has reached the limit of servers | 30 servers max", this.res, 500);
+         await group.servers.every((server) => {
             if(server.uuid === req.body.uuid)
-              throw new Error("server name already exists");
+              errorManager("server name already exists", this.res, 500);
           })
-          group.servers.push(await dbManager.serverSecurityChopper(req.body));
+          let newGroup=dbManager.serverSecurityChopper(req.body);          
+          group.servers.push(newGroup);
         }
       });
-      console.log(doc);
+      console.log(doc,3);
       
       await this.userDocRef.set(doc as UserDto);
     } catch (e) {
-      throw new Error(e);
+      errorManager(e, this.res, 500);
     }
   }
 
@@ -144,7 +153,7 @@ export class dbManager {
       let doc: any|UserDto= await this.userDocRef.get();
       doc = doc.data() as UserDto;
       if (req.body.id === undefined || req.body.id === "") {
-        throw new Error("non existing server");
+        errorManager("non existing server", this.res, 500);
       }
       doc.groups.map((group) => {
         if (group.id === req.body.group.id ){
@@ -155,11 +164,12 @@ export class dbManager {
       });
       await this.userDocRef.set(doc as UserDto);
     } catch (e) {
-      throw new Error(e);
+      errorManager(e, this.res, 500);
     }
   }
   static serverSecurityChopper(server:ServerDto):ServerDto{
-    server.ssh_passphrase,server.ssh_privatekey=undefined;
+    server.ssh_passphrase=null;
+    server.ssh_privatekey=null;
     return server;}
 
 }

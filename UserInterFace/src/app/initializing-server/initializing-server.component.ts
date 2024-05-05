@@ -1,9 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AlertButton, ModalController } from '@ionic/angular';
-import { GroupDto } from 'src/Types/interfaces/Group.dto';
 import { ServerDto } from 'src/Types/interfaces/Server.dto';
 import { DataService } from '../services/data-service.service';
 import { UserDto } from 'src/Types/interfaces/User.dto';
+import { GroupDto } from 'src/Types/interfaces/Group.dto';
 
 @Component({
   selector: 'app-initializing-server',
@@ -13,9 +13,9 @@ import { UserDto } from 'src/Types/interfaces/User.dto';
 export class InitializingServerComponent implements OnInit {
   @Input() isGroup: boolean = false;
   @Input() server: ServerDto = {
-    SSH_host: '38.180.86.210',
-    SSH_user: 'root',
-    SSH_passphrase: 'sss1378s',
+    ssh_host: '38.180.86.210',
+    ssh_user: 'root',
+    ssh_passphrase: 'sss1378s',
   };
   @Input() group: GroupDto = { id: '', name: '', isInit: false };
   @Input() groups: GroupDto[] = [];
@@ -40,8 +40,8 @@ export class InitializingServerComponent implements OnInit {
       : 'Add server';
     this.server = { ...this.server };
     this.group = { ...this.group };
-    if (!this.server.Group?.id.length && this.groups.length > 0) {
-      this.groups.forEach((group) => {if(group.isInit)this.server.Group = group});
+    if (!this.server.group?.id.length && this.groups.length > 0) {
+      this.groups.forEach((group) => {if(group.isInit)this.server.group = group});
     }
   }
   fileToBuffer(event: Event) {
@@ -96,7 +96,7 @@ export class InitializingServerComponent implements OnInit {
       }
       reader.onload = () => {
         const buffer = reader.result as ArrayBuffer;
-        this.server.SSH_privatekey = buffer;
+        this.server.ssh_privatekey = buffer;
         return true;
       };
 
@@ -152,7 +152,7 @@ export class InitializingServerComponent implements OnInit {
     };
   }
   changeGroup(event: any) {
-    this.server.Group = this.groups.find(
+    this.server.group = this.groups.find(
       (group) => group.id == event.detail.value
     );
   }
@@ -163,7 +163,7 @@ export class InitializingServerComponent implements OnInit {
       this.setAlert(
         true,
         'Error',
-        'Group name is short',
+        'group name is short',
         'name must be more than 3 characters',
         [
           {
@@ -179,7 +179,7 @@ export class InitializingServerComponent implements OnInit {
       this.setAlert(
         true,
         'Error',
-        'Group name is too long',
+        'group name is too long',
         'name must be more than less than 15 characters',
         [
           {
@@ -193,7 +193,7 @@ export class InitializingServerComponent implements OnInit {
       return;
     } else {
       outData = await this.backendService.postData(
-        !this.group.id.length ? 'addGroup' : 'editGroup',
+        !this.group.id.length ? 'addgroup' : 'editgroup',
         this.group
       );
 
@@ -204,9 +204,9 @@ export class InitializingServerComponent implements OnInit {
     let outData: UserDto;
 
     if (
-      this.server.Name === undefined ||
-      this.server.Name === '' ||
-      this.server.Name.length < 2
+      this.server.name === undefined ||
+      this.server.name === '' ||
+      this.server.name.length < 2
     ) {
       this.setAlert(
         true,
@@ -223,7 +223,7 @@ export class InitializingServerComponent implements OnInit {
         ]
       );
       return;
-    } else if (this.server.Name != undefined && this.server.Name.length > 15) {
+    } else if (this.server.name != undefined && this.server.name.length > 15) {
       this.setAlert(
         true,
         'Error',
@@ -240,8 +240,8 @@ export class InitializingServerComponent implements OnInit {
       );
       return;
     } else if (
-      this.server.SSH_user == undefined ||
-      this.server.SSH_user === ''
+      this.server.ssh_user == undefined ||
+      this.server.ssh_user === ''
     ) {
       this.setAlert(
         true,
@@ -258,7 +258,7 @@ export class InitializingServerComponent implements OnInit {
         ]
       );
       return;
-    } else if (this.server.SSH_port == undefined || !this.server.SSH_port) {
+    } else if (this.server.ssh_port == undefined || !this.server.ssh_port) {
       this.setAlert(
         true,
         'Error',
@@ -275,8 +275,8 @@ export class InitializingServerComponent implements OnInit {
       );
       return;
     } else if (
-      this.server.SSH_passphrase === '' &&
-      this.server.SSH_privatekey == undefined
+      this.server.ssh_passphrase === '' &&
+      this.server.ssh_privatekey == undefined
     ) {
       this.setAlert(
         true,

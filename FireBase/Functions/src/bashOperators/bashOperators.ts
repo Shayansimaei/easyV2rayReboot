@@ -26,6 +26,17 @@ export class bashOperators implements EventEmitterClass {
     connectedServer.on(bashOperatorsEvents.OSVersion, (data) => {
       this.emitter(bashOperatorsEvents.OSVersion, data);
     });
+    
+  }
+  isV2rayInstalled(connectedServer: serverProcessor) {
+    connectedServer.customExec(
+      operatingSystemCommands.checkV2rayInstallation,
+      bashOperatorsEvents.isV2rayInstalled
+    );
+    connectedServer.on(bashOperatorsEvents.isV2rayInstalled, (data) => {
+      this.emitter(bashOperatorsEvents.isV2rayInstalled, data);
+    });
+
   }
   on(event: string, listener: (...args: any[]) => void) {
     this.eventEmitter.on(event, listener);
@@ -37,6 +48,7 @@ export class bashOperators implements EventEmitterClass {
 export enum bashOperatorsEvents {
   operatingSystem = "operatingSystem",
   OSVersion = "OSVersion",
+  isV2rayInstalled = "isV2rayInstalled",
   onError = "onError",
   onEnd = "onEnd",
   onExecData = "onExecData",

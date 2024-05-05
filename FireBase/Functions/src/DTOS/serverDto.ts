@@ -14,6 +14,12 @@ export interface ServerDto
     connectionLink?: string;
     group?: GroupDto;
     v2rayUsers?: V2rayUserDto[];
+    installed?:{
+        v2ray?: boolean;
+        modified?: boolean;
+        version?: string;
+        caddyVersion?: string;
+    };
 }
 export interface V2rayUserDto{
     email?: string;
@@ -21,5 +27,6 @@ export interface V2rayUserDto{
     alterId?: number;
     uuid?: string;
     security?: string;
+    
     // StreamSettings?: StreamSettingsDto;
 }

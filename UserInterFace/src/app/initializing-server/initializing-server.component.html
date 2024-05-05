@@ -21,7 +21,7 @@
         <ion-select
           label="{{ 'servers group' | translate }}"
           placeholder="{{ 'servers group' | translate }}"
-          [ngModel]="server.Group?.id" (ngModelChange)="changeGroup($event)"
+          [ngModel]="server.group?.id" (ngModelChange)="changeGroup($event)"
         >
           <ion-select-option
             *ngFor="let group of groups"
@@ -31,7 +31,7 @@
         </ion-select>
       </ion-item>
       <ion-item>
-        <ion-input labelPlacement="floating" [(ngModel)]="server.Name">
+        <ion-input labelPlacement="floating" [(ngModel)]="server.name">
           <div slot="label">
             {{ "server name" | translate }}
             <ion-text color="danger">{{ "(Required)" | translate }}</ion-text>
@@ -39,7 +39,7 @@
         </ion-input>
       </ion-item>
       <ion-item>
-        <ion-input labelPlacement="floating" [(ngModel)]="server.SSH_user">
+        <ion-input labelPlacement="floating" [(ngModel)]="server.ssh_user">
           <div slot="label">
             {{ "server user" | translate }}
             <ion-text color="danger">{{ "(Required)" | translate }}</ion-text>
@@ -47,7 +47,7 @@
         </ion-input>
       </ion-item>
       <ion-item>
-        <ion-input labelPlacement="floating" [(ngModel)]="server.SSH_host">
+        <ion-input labelPlacement="floating" [(ngModel)]="server.ssh_host">
           <div slot="label">
             {{ "server host" | translate }}
             <ion-text color="danger">{{ "(Required)" | translate }}</ion-text>
@@ -57,7 +57,7 @@
       <ion-item>
         <ion-input
           labelPlacement="floating"
-          [(ngModel)]="server.SSH_port"
+          [(ngModel)]="server.ssh_port"
           value="22"
           type="number"
         >
@@ -75,7 +75,7 @@
       <ion-item *ngIf="passCheck.checked">
         <ion-input
           labelPlacement="floating"
-          [(ngModel)]="server.SSH_passphrase"
+          [(ngModel)]="server.ssh_passphrase"
           type="password"
         >
           <div slot="label">

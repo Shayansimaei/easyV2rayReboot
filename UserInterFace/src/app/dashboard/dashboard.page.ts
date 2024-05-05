@@ -38,6 +38,8 @@ export class DashboardPage implements OnInit,OnDestroy {
   }
   async getData(){
     this.userData = await this.backendService.getData('getServers');
+    console.log(this.userData);
+    
   }
   async showDialogForGroup(group?: GroupDto) {
     if (!group) {
@@ -67,7 +69,7 @@ export class DashboardPage implements OnInit,OnDestroy {
     await modal.present();
   }
   async showDialogForServerWithKnownGroup(group: GroupDto, groups: GroupDto[]) {
-    let server: ServerDto = { Group: group };
+    let server: ServerDto = { group: group };
     const modal = await this.modalController.create({
       component: DialogComponent,
       componentProps: {

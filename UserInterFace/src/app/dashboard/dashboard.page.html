@@ -88,7 +88,7 @@
               *ngIf="group.servers?.length;else emptyGroup"
             >
               <ion-item *ngFor="let server of group.servers">
-                <ion-label>{{server.Name}}</ion-label>
+                <ion-label>{{server.name}}</ion-label>
               </ion-item>
             </ion-list>
             <ng-template #emptyGroup>

@@ -3,15 +3,15 @@ import { V2rayUserDto } from "./V2rayUser.dto";
 
 export interface ServerDto
 {
-    Uuid?: string;
-    Name?: string;
-    SSH_host?: string;
-    SSH_user?: string;
-    SSH_port?: number;
-    SSH_privatekey?: ArrayBuffer;
-    SSH_passphrase?: string;
-    OperatingSystem?: string;
+    uuid?: string;
+    name?: string;
+    ssh_host?: string;
+    ssh_user?: string;
+    ssh_port?: number;
+    ssh_privatekey?: ArrayBuffer;
+    ssh_passphrase?: string;
+    operatingSystem?: string;
     ConnectionLink?: string;
-    Group?: GroupDto;
-    V2rayUsers?: V2rayUserDto[];
+    group?: GroupDto;
+    v2rayUsers?: V2rayUserDto[];
 }
