@@ -1,2 +1,4 @@
 # easyV2rayReboot
-EasyV2ray a gui and one click v2ray maker this app is for non programmers or lazy Guys 😜
+# What is this for ?
+### it is an app for end user with minimal knowledge server or even computer, wich aims to ease and facilitize setuping v2ray servers 
+https://www.awesomescreenshot.com/video/34979888?key=ff92d3a519a640ffec5b5430a6a97dbd
