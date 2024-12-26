@@ -2,6 +2,9 @@
 # What is this for ?
 ###  It is a multilanguage  app for end users with minimal knowledge of the server or even computer, which aims to ease and facilitate setting up v2ray servers.
 <img src="https://media-upload.net/uploads/VBDYmMjv7q54.gif"  width="15rem">
+<img src="https://media-upload.net/uploads/qkNRt5OvjH4G.gif" width="15rem">
+
+
 
 # Goal
 ### This app aims to be free and accessible and expandable on most platforms as web - mobile-app and desktop app
