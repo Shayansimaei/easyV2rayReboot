@@ -14,9 +14,11 @@
 ### It would execute <a href="https://github.com/Shayansimaei/v2ray">v2ray</a> script as the backend for the aplication
 ### Servers are manageable and storable in groups
 ### App initialize all the v2ray configuration by itself
+<div style="display:row; margin:5rem:">
+
 <img src="https://media-upload.net/uploads/6cudevJWFsAf.gif" width="15rem">
-
-
+<img src="https://media-upload.net/uploads/19Akw4le5cD6.gif" width="15rem">
+</div>
 
 # Technologies in use
 ### This app uses most common and popular technologies as angular-ionic - firebase and typescript
