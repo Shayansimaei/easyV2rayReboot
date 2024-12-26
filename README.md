@@ -5,7 +5,12 @@
 
 # Goal
 ### This app aims to be free and accessible and expandable on most platforms as web - mobile-app and desktop app
+<div style="display:row; margin:5rem:">
 <img src="https://media-upload.net/uploads/YCRX_LjnceSf.gif"  width="15rem">
+<img src="https://media-upload.net/uploads/kalgxOEvtJ32.gif">
+</div>
+
+
 
 
 # Technologies in use
