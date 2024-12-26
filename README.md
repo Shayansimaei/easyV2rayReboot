@@ -12,7 +12,7 @@
   <img src="https://pbs.twimg.com/tweet_video_thumb/F-RQI8xWIAAtKc0.jpg"  width="150">
 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSplRO58DVk5xfzLcaJfeXBEb6ByOHA_f_5dQ&s"  width="150">
 <img src="https://firebase.google.com/static/images/brand-guidelines/logo-vertical.png"  width="150">
-<img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fvmsoftwarehouse.com%2Ftech-stack%2Ftypescript&psig=AOvVaw1nb5EjV2EiVFfJr84pEvC4&ust=1735328068147000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCIC_5v2WxooDFQAAAAAdAAAAABAE"  width="150">
+<img src="https://www.datocms-assets.com/48401/1628645197-learn-typescript.png"  width="150">
 </div>
 
 
