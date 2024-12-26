@@ -5,9 +5,8 @@
 
 # Goal
 ### This app aims to be free and accessible and expandable on most platforms as web - mobile-app and desktop app
-<video width="320" height="240">
-  <source src="https://media-upload.net/file/RIZ7hlFEOBD3](https://media-upload.net/uploads/RIZ7hlFEOBD3.mp4" type="video/mp4">
-</video>
+<img src="https://media-upload.net/file/YCRX_LjnceSf"  width="15rem">
+
 
 # Technologies in use
 ### This app uses most common and popular technologies as angular-ionic - firebase and typescript
