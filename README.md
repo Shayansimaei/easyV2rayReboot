@@ -10,6 +10,11 @@
 <img src="https://media-upload.net/uploads/jwJ_kcXVaqbK.gif" width="15rem">
 </div>
 
+#Instruction
+### It would execute <a href="https://github.com/Shayansimaei/v2ray"></a> script as the backend for the aplication
+### Servers are manageable and storable in groups
+### App initialize all the v2ray configuration by itself
+<img src="https://media-upload.net/uploads/6cudevJWFsAf.gif" width="15rem">
 
 
 
