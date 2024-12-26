@@ -5,7 +5,7 @@
 
 # Goal
 ### This app aims to be free and accessible and expandable on most platforms as web - mobile-app and desktop app
-<video width="320" height="240" controls>
+<video width="320" height="240">
   <source src="https://media-upload.net/file/RIZ7hlFEOBD3" type="video/mp4">
 </video>
 
