@@ -8,9 +8,11 @@
 
 # Technologies in use
 ### This app uses most common and popular technologies as angular-ionic - firebase and typescript
-<img src="https://pbs.twimg.com/tweet_video_thumb/F-RQI8xWIAAtKc0.jpg"  width="15rem">
-<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSplRO58DVk5xfzLcaJfeXBEb6ByOHA_f_5dQ&s"  width="15rem">
-<img src="https://firebase.google.com/static/images/brand-guidelines/logo-vertical.png"  width="15rem">
-<img src="https://www.datocms-assets.com/48401/1628645197-learn-typescript.png"  width="15rem">
+<div style="display:row;>
+  <img src="https://pbs.twimg.com/tweet_video_thumb/F-RQI8xWIAAtKc0.jpg"  width="100">
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSplRO58DVk5xfzLcaJfeXBEb6ByOHA_f_5dQ&s"  width="100">
+<img src="https://firebase.google.com/static/images/brand-guidelines/logo-vertical.png"  width="100">
+<img src="https://www.datocms-assets.com/48401/1628645197-learn-typescript.png"  width="100">
+</div>
 
 
