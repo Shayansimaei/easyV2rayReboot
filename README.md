@@ -5,7 +5,7 @@
 
 # Goal
 ### This app aims to be free and accessible and expandable on most platforms as web - mobile-app and desktop app
-<img src="https://media-upload.net/file/YCRX_LjnceSf.gif"  width="15rem">
+<img src="https://media-upload.net/uploads/YCRX_LjnceSf.gif"  width="15rem">
 
 
 # Technologies in use
