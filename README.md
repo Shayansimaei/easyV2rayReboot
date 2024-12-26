@@ -1,6 +1,6 @@
 # easyV2rayReboot
 # What is this for ?
-###  It is an app for end users with minimal knowledge of the server or even computer, which aims to ease and facilitate setting up v2ray servers.
+###  It is a multilanguage  app for end users with minimal knowledge of the server or even computer, which aims to ease and facilitate setting up v2ray servers.
 <img src="https://media-upload.net/uploads/VBDYmMjv7q54.gif"  width="15rem">
 
 # Goal
@@ -14,7 +14,9 @@
 ### It would execute <a href="https://github.com/Shayansimaei/v2ray">v2ray</a> script as the backend for the aplication
 ### Servers are manageable and storable in groups
 <img src="https://media-upload.net/uploads/6cudevJWFsAf.gif" width="15rem">
+
 ### App initialize all the v2ray configuration by itself
+
 <img src="https://media-upload.net/uploads/19Akw4le5cD6.gif" width="15rem">
 
 # Technologies in use
