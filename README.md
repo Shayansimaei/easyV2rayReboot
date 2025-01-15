@@ -14,7 +14,7 @@
 </div>
 
 #Instruction
-### It would execute <a href="https://github.com/Shayansimaei/v2ray">v2ray</a> script as the backend for the aplication
+### It would execute <a href="https://github.com/Shayansimaei/v2ray">v2ray</a> script as the backend for the application
 ### Servers are manageable and storable in groups
 <img src="https://media-upload.net/uploads/6cudevJWFsAf.gif" width="15rem">
 
