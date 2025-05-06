@@ -18,7 +18,7 @@
 ### Servers are manageable and storable in groups
 <img src="https://media-upload.net/uploads/6cudevJWFsAf.gif" width="15rem">
 
-### App initialize all the v2ray configuration by itself
+### App initializes all the v2ray configuration by itself
 
 <img src="https://media-upload.net/uploads/19Akw4le5cD6.gif" width="15rem">
 
